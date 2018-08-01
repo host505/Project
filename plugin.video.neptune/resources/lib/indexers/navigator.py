@@ -40,6 +40,10 @@ queueMenu = control.lang(32065).encode('utf-8')
 
 class navigator:
 	def root(self):
+		self.addDirectoryItem('[COLOR=orange]Title search (Movies)[/COLOR]', 'movieSearch', 'search.jpg', 'DefaultMovies.jpg')
+		self.addDirectoryItem('[COLOR=orange]Title search (TV)[/COLOR]', 'tvSearch', 'search.jpg', 'DefaultTVShows.jpg')
+		self.addDirectoryItem('[COLOR=orange]People search (Movies)[/COLOR]', 'moviePerson', 'actorsearch.jpg', 'DefaultMovies.jpg')
+		self.addDirectoryItem('[COLOR=orange]People search (TV)[/COLOR]', 'tvPerson', 'actorsearch.jpg', 'DefaultTVShows.jpg')
 		self.addDirectoryItem(32001, 'movieNavigator', 'movies.jpg', 'DefaultMovies.jpg')
 		self.addDirectoryItem(32002, 'tvNavigator', 'tvshows.jpg', 'DefaultTVShows.jpg')
 		self.addDirectoryItem('Top Movies', 'playlistNavigator', 'top.jpg', 'DefaultMovies.jpg')
