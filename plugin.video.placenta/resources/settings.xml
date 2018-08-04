@@ -116,7 +116,6 @@
         <setting id="provider.huluplus" type="bool" label="HULUPLUS" default="true" />
         <setting id="provider.hulufilm" type="bool" label="HULUFILM" default="true" />
         <setting id="provider.icefilms" type="bool" label="ICEFILMS" default="true" />
-        <setting id="provider.kattv" type="bool" label="KATTV" default="false" />
         <setting id="provider.library" type="bool" label="LIBRARY" default="true" />
         <setting id="provider.movie4kto" type="bool" label="MOVIE4KTO" default="false" />
         <setting id="provider.movie4korg" type="bool" label="MOVIE4K" default="true" />
@@ -134,7 +133,8 @@
         <setting id="provider.series9" type="bool" label="SERIES9" default="true" />
         <setting id="provider.solarmoviez" type="bool" label="SOLARMOVIEZ" default="true" />
         <setting id="provider.timewatch" type="bool" label="TIMETOWATCH" default="false" />
-        <setting id="provider.tvrelease" type="bool" label="TVRELEASE" default="true" />
+        <setting id="provider.tvbox" type="bool" label="TVBOX" default="false" />
+        <setting id="provider.tvrelease" type="bool" label="TVRELEASE" default="false" />
         <setting id="provider.ultrahd" type="bool" label="ULTRAHD" default="true" />
         <setting id="provider.videoscraper" type="bool" label="VIDEOSCRAPER" default="true" />
         <setting id="provider.vodly" type="bool" label="VODLY" default="true" />
