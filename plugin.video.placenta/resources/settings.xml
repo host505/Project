@@ -83,6 +83,7 @@
         <setting id="provider.123fox" type="bool" label="123FOX" default="false" />	
         <setting id="provider.123hulu" type="bool" label="123HULU" default="false" />
         <setting id="provider.123netflix" type="bool" label="123NETFLIX" default="true" />
+        <setting id="provider.123movies" type="bool" label="123MOVIES" default="false" />
         <setting id="provider.123moviesgold" type="bool" label="123MOVIESGOLD" default="true" />
         <setting id="provider.1080P" type="bool" label="1080P" default="true" />
         <setting id="provider.afdah" type="bool" label="AFDAH" default="true" />

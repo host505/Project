@@ -26,7 +26,7 @@ class source:
         self.language = ['en']
         self.domains = ['1080pmovie.com', 'watchhdmovie.net']
         self.base_link = 'https://watchhdmovie.net'
-        self.search_link = '%s/wp-json/wp/v2/posts?search=%s'
+        self.search_link = '/?s=%s'
 
     def movie(self, imdb, title, localtitle, aliases, year):
         try:
@@ -71,5 +71,4 @@ class source:
 
     def resolve(self, url):
         return directstream.googlepass(url)
-
 

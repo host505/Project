@@ -77,9 +77,9 @@ class source:
                 try:
                     if 'facebook' in i or 'plus.google' in i: continue
                     url = i
-                    if 'http://24hd.org' in url and url.lower().endswith(('.mp4','ts')):
+                    if 'https://openload.co' in url and url.lower().endswith(('embed/%s')):
                         sources.append({'source': 'CDN', 'quality': quality, 'language': 'en', 'url': url,
-                                    'info': '', 'direct': True, 'debridonly': False})
+                                    'info': '', 'direct': False, 'debridonly': False})
 
                     elif 'ok.ru' in url:
                         print url
@@ -87,13 +87,13 @@ class source:
                         url = directstream.odnoklassniki(url)
                         print url
                         sources.append({'source': host, 'quality': quality, 'language': 'en', 'url': url,
-                                        'info': '', 'direct': False, 'debridonly': True})
+                                        'info': '', 'direct': False, 'debridonly': False})
 
                     elif 'vk.com' in url:
                         host = 'vk'
                         url = directstream.vk(url)
                         sources.append({'source': host, 'quality': quality, 'language': 'en', 'url': url,
-                                        'info': '', 'direct': False, 'debridonly': True})
+                                        'info': '', 'direct': False, 'debridonly': False})
 
                     else:
                         valid, host = source_utils.is_host_valid(url, hostDict)
@@ -114,5 +114,4 @@ class source:
 
     def resolve(self, url):
         return url
-
 
