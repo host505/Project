@@ -77,6 +77,7 @@ class source:
             data = dict([(i, data[i][0]) if data[i] else (i, '') for i in data])        
             title = data['tvshowtitle'] if 'tvshowtitle' in data else data['title']
             hdlr = 'S%02dE%02d' % (int(data['season']), int(data['episode'])) if 'tvshowtitle' in data else data['year']
+            premDate = ''
             
             query = '%s S%02dE%02d' % (
             data['tvshowtitle'], int(data['season']), int(data['episode'])) if 'tvshowtitle' in data else '%s %s' % (
@@ -107,39 +108,45 @@ class source:
                 url = "http://rlsbb.ru/" + query
                 r = client.request(url)
 
-            if r == None and 'tvshowtitle' in data:                                         # s00e00 serial failed: try again with YYYY-MM-DD
-                # http://rlsbb.ru/the-daily-show-2018-07-24                                 ... example landing urls
-                # http://rlsbb.ru/stephen-colbert-2018-07-24                                ... case and "date dots" get fixed by rlsbb
-                #query= re.sub('(\\\|/| -|:|;|\*|\?|"|\'|<|>|\|)','',data['tvshowtitle'])   # this RE copied from above is just trash
-                
-                premDate = re.sub('[ \.]','-',data['premiered'])                            # date looks usually YYYY-MM-DD but dunno if always
-                query = re.sub('[\\\\:;*?"<>|/\-\']', '', data['tvshowtitle'])              # quadruple backslash = one backslash :p
-                query = query.replace("&", " and ").replace("  ", " ").replace(" ", "-")    # throw in extra spaces around & just in case
-                query = query + "-" + premDate                      
-                
-                url = "http://rlsbb.ru/" + query            
-                url = url.replace('The-Late-Show-with-Stephen-Colbert','Stephen-Colbert')   # 
-                #url = url.replace('Some-Specific-Show-Title-No2','Scene-Title2')           # shows I want...
-                #url = url.replace('Some-Specific-Show-Title-No3','Scene-Title3')           #         ...but theTVDB title != Scene release
+            # looks like some shows have had episodes from the current season released in s00e00 format before switching to YYYY-MM-DD
+            # this causes the second fallback search above for just s00 to return results and stops it from searching by date (ex. http://rlsbb.ru/vice-news-tonight-s02)
+            # so loop here if no items found on first pass and force date search second time around
+            for loopCount in range(0,2):
+                if loopCount == 1 or (r == None and 'tvshowtitle' in data):                     # s00e00 serial failed: try again with YYYY-MM-DD
+                    # http://rlsbb.ru/the-daily-show-2018-07-24                                 ... example landing urls
+                    # http://rlsbb.ru/stephen-colbert-2018-07-24                                ... case and "date dots" get fixed by rlsbb
+                    #query= re.sub('(\\\|/| -|:|;|\*|\?|"|\'|<|>|\|)','',data['tvshowtitle'])   # this RE copied from above is just trash
+                    
+                    premDate = re.sub('[ \.]','-',data['premiered'])                            # date looks usually YYYY-MM-DD but dunno if always
+                    query = re.sub('[\\\\:;*?"<>|/\-\']', '', data['tvshowtitle'])              # quadruple backslash = one backslash :p
+                    query = query.replace("&", " and ").replace("  ", " ").replace(" ", "-")    # throw in extra spaces around & just in case
+                    query = query + "-" + premDate                      
+                    
+                    url = "http://rlsbb.ru/" + query            
+                    url = url.replace('The-Late-Show-with-Stephen-Colbert','Stephen-Colbert')   # 
+                    #url = url.replace('Some-Specific-Show-Title-No2','Scene-Title2')           # shows I want...
+                    #url = url.replace('Some-Specific-Show-Title-No3','Scene-Title3')           #         ...but theTVDB title != Scene release
 
-                r = client.request(url)
-                
-            posts = client.parseDOM(r, "div", attrs={"class": "content"})   # get all <div class=content>...</div>
-            hostDict = hostprDict + hostDict                                # ?
-            items = []
-            for post in posts:
-                try:
-                    u = client.parseDOM(post, 'a', ret='href')              # get all <a href=..... </a>
-                    for i in u:                                             # foreach href url
-                        try:
-                            name = str(i)
-                            if hdlr in name.upper(): items.append(name)
-                            elif premDate in name.replace(".","-"): items.append(name)      # s00e00 serial failed: try again with YYYY-MM-DD
-                            # NOTE: the vast majority of rlsbb urls are just hashes! Future careful link grabbing would yield 2x or 3x results
-                        except:
-                            pass
-                except:
-                    pass
+                    r = client.request(url)
+                    
+                posts = client.parseDOM(r, "div", attrs={"class": "content"})   # get all <div class=content>...</div>
+                hostDict = hostprDict + hostDict                                # ?
+                items = []
+                for post in posts:
+                    try:
+                        u = client.parseDOM(post, 'a', ret='href')              # get all <a href=..... </a>
+                        for i in u:                                             # foreach href url
+                            try:
+                                name = str(i)
+                                if hdlr in name.upper(): items.append(name)
+                                elif len(premDate) > 0 and premDate in name.replace(".","-"): items.append(name)      # s00e00 serial failed: try again with YYYY-MM-DD
+                                # NOTE: the vast majority of rlsbb urls are just hashes! Future careful link grabbing would yield 2x or 3x results
+                            except:
+                                pass
+                    except:
+                        pass
+                        
+                if len(items) > 0: break
 
             seen_urls = set()
 
