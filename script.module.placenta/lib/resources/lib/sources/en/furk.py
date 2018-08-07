@@ -26,8 +26,8 @@ class source:
                                 "&match=%s&moderated=%s%s&sort=relevance&type=video&offset=0&limit=%s"
         self.tfile_link = "/api/file/get?api_key=%s&t_files=1&id=%s"
         self.login_link = "/api/login/login?login=%s&pwd=%s"
-        self.user_name = control.setting('furk.user')
-        self.user_pass = control.setting('furk.pass')
+        self.user_name = control.setting('furk.user_name')
+        self.user_pass = control.setting('furk.user_pass')
         self.api_key = control.setting('furk.api')
         self.search_limit = control.setting('furk.limit')
         self.mod_level = control.setting('furk.mod.level').lower()
