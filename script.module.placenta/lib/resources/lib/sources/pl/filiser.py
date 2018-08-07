@@ -10,7 +10,7 @@
 
 # Addon Name: Placenta
 # Addon id: plugin.video.placenta
-# Addon Provider: Mr.Blamo
+# Addon Provider: Mr.blamo
 
 import urllib, urlparse
 
@@ -22,9 +22,9 @@ class source:
     def __init__(self):
         self.priority = 1
         self.language = ['pl']
-        self.domains = ['filiser.co']
+        self.domains = ['filionline.pl']
 
-        self.base_link = 'https://filiser.co'
+        self.base_link = 'http://filionline.pl/'
         self.url_transl = 'embed?salt=%s'
         self.search_link = 'szukaj?q=%s'
         self.episode_link = '-Season-%01d-Episode-%01d'
@@ -151,9 +151,9 @@ class source:
             url_to_exec = urlparse.urljoin(self.base_link, self.url_transl) % url
             result = client.request(url_to_exec)
 
-            search_string = 'var b="';
+            search_string = "var url = '";
             begin = result.index(search_string) + len(search_string)
-            end = result.index('"', begin)
+            end = result.index("'", begin)
 
             result_url = result[begin:end]                                    
             result_url = result_url.replace('#WIDTH', '100')

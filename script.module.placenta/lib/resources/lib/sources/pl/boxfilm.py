@@ -10,7 +10,7 @@
 
 # Addon Name: Placenta
 # Addon id: plugin.video.placenta
-# Addon Provider: Mr.Blamo
+# Addon Provider: Mr.blamo
 import urlparse
 
 from resources.lib.modules import cleantitle
@@ -23,7 +23,7 @@ class source:
         self.language = ['pl']
         self.domains = ['boxfilm.pl']
         
-        self.base_link = 'http://www.boxfilm.pl'
+        self.base_link = 'https://www.boxfilm.pl'
         self.search_link = '/szukaj'
         
     def movie(self, imdb, title, localtitle, aliases, year):
