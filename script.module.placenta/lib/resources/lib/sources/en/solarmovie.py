@@ -26,15 +26,21 @@ class source:
         self.domains = ['solarmovie.ms']
         self.base_link = 'http://www.solarmovie.ms'
         self.search_link = '/keywords/%s'
+		# Testing: Star Wars: Episode II - Attack Of The Clones
+		# Failed:  http://www.solarmovie.ms/keywords/star%20wars%20%20episode%20ii%20%20%20attack%20of%20the%20clones
+        # Working: http://www.solarmovie.ms/keywords/Star%20Wars:%20Episode%20II%20-%20Attack%20Of%20The%20Clones
+		# Changing ANY punctuation or spaces results in failure!!! (different case is fine)
+		# http://www.solarmovie.ms/watch-star-wars-episode-ii-attack-of-the-clones-online.html
 
     def movie(self, imdb, title, localtitle, aliases, year):
         try:
-            search_id = title.lower().replace(':', ' ').replace('-', ' ')
+#           search_id = title.lower().replace(':', ' ').replace('-', ' ') # see __init__
 
-            start_url = urlparse.urljoin(self.base_link, (self.search_link % (search_id.replace(' ','%20'))))         
+#           start_url = urlparse.urljoin(self.base_link, (self.search_link % (search_id.replace(' ','%20'))))         
+            start_url = urlparse.urljoin(self.base_link, (self.search_link % (title.replace(' ','%20'))))  
             
             headers={'User-Agent':client.randomagent()}
-            html = client.request(start_url,headers=headers)     
+            html = client.request(start_url,headers=headers)    		
             
             match = re.compile('<span class="name"><a title="(.+?)" href="(.+?)".+?title="(.+?)"',re.DOTALL).findall(html)
             for name,item_url, link_year in match:
