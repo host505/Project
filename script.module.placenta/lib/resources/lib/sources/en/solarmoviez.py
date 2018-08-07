@@ -118,7 +118,7 @@ class source:
         try:
             title = cleantitle.normalize(title)
             url = urlparse.urljoin(self.base_link, self.search_link % urllib.quote_plus(cleantitle.getsearch(title)))
-            r = client.request(url, headers=headers, timeout='15')
+            r = client.request(url, headers=headers, timeout='20')
             r = client.parseDOM(r, 'div', attrs={'class': 'ml-item'})
             r = zip(client.parseDOM(r, 'a', ret='href'), client.parseDOM(r, 'a', ret='title'))
             results = [(i[0], i[1], re.findall('\((\d{4})', i[1])) for i in r]

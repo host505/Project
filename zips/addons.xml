@@ -20,7 +20,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.audio.thunderstruck" name="Thunderstruck" version="2.5.4" provider-name="Rogue/ThunderStruck">
+<addon id="plugin.audio.thunderstruck" name="Thunderstruck" version="2.5.6" provider-name="Rogue/ThunderStruck">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.t0mm0.common" version="1.1.0"/>
@@ -43,7 +43,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.program.blamowizard" name="69 Death Wizard" version="1.2" provider-name="Mr.Blamo">
+<addon id="plugin.program.blamowizard" name="69 Death Wizard" version="1.3" provider-name="Mr.Blamo">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -337,7 +337,7 @@ This is a Non-profit resource, organized solely for educational purposes which i
 	</extension>
 </addon>
 
-<addon id="plugin.video.chocolatesaltyballs" name="[COLORorange]Chocolate Salty Balls[/COLOR]" version="8.5" provider-name="[COLORlimegreen]Team Deez Nutz[/COLOR]">
+<addon id="plugin.video.chocolatesaltyballs" name="[COLORorange]Chocolate Salty Balls[/COLOR]" version="9.2" provider-name="[COLORlimegreen]Team Deez Nutz[/COLOR]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" />
@@ -480,7 +480,7 @@ This is a Non-profit resource, organized solely for educational purposes which i
   </extension>
 </addon>
 
-<addon id="plugin.video.neptune" version="1.4.7" name=" Neptune Rising" provider-name="Mr. Blamo">
+<addon id="plugin.video.neptune" version="1.4.8" name=" Neptune Rising" provider-name="Mr. Blamo">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0" />
 		<import addon="script.neptune.artwork" />
@@ -518,16 +518,18 @@ This is a Non-profit resource, organized solely for educational purposes which i
 	</extension>
 </addon>
 
-<addon id="plugin.video.patron.aio" name="[COLOR red]Pa[COLOR snow]tr[COLOR green]on [COLOR red]A[COLOR snow]I[COLOR dodgerblue]O[/COLOR]" version="1.6.3" provider-name="EPB">
+<addon id="plugin.video.patron.aio" name="[COLOR red]Pa[COLOR snow]tr[COLOR green]on [COLOR red]A[COLOR snow]I[COLOR dodgerblue]O[/COLOR]" version="1.7.4" provider-name="EPB">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
-        <import addon="script.module.universalscrapers" version="1.0.9.2" />
-        <import addon="script.module.python.koding.aio" version="1.0" />
+        <import addon="script.module.universalscrapers" version="1.0.0" />
+        <import addon="script.module.python.koding.aio" version="0.9.6.6" />
         <import addon="script.module.beautifulsoup" version="3.2.1" />
         <import addon="script.module.requests" version="2.9.1" />
         <import addon="script.module.addon.common" version="2.0.0" />
         <import addon="script.module.xmltodict" version="0.9.0" />
+        <!--<import addon="script.module.web-pdb" version="1.0"/>-->
         <import addon="script.module.resolveurl" />
+        <!--<import addon="script.module.urlresolver" />-->
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -535,13 +537,12 @@ This is a Non-profit resource, organized solely for educational purposes which i
     <extension point="xbmc.service" library="service.py" start="[login|startup]" />
     <extension point="xbmc.addon.metadata">
         <summary lang="en">Patron All In One</summary>
-        <description lang="en"> Movies, TV Shows, and Stand-Up</description>
-        <disclaimer lang="en">The author is not responsible for the use of this addon. The author is not responsible for the content found using this addon. The author does not host or own any content found within this addon.[CR]The author is in no way affiliated with Kodi, Team Kodi, or the XBMC Foundation.[CR]This is a Non-profit resource, organized solely for educational purposes which is protected under the Fair-Use doctrine of the Copyright Act, Specifically section 107, which does promote freedom of expression, by permitting the unlicensed use of copyright-protected works.</disclaimer>
+        <description lang="en">Movies, TV Shows, Collections, Stand-Up</description>
         <platform>all</platform>
     </extension>
 </addon>
 
-<addon id="plugin.video.placenta" version="1.3.9" name="Placenta" provider-name="Team Afterbirth">
+<addon id="plugin.video.placenta" version="1.4.2" name="Placenta" provider-name="Team Afterbirth">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0" />
 		<import addon="script.module.placenta" />
@@ -699,7 +700,7 @@ This is a Non-profit resource, organized solely for educational purposes which i
     </extension>
 </addon>
 
-    <addon id="repository.blamo" name="[COLOR red]Blamo Repo[/COLOR]" version="0.1.6" provider-name="Mr Blamo">
+    <addon id="repository.blamo" name="[COLOR red]Blamo Repo[/COLOR]" version="0.1.7" provider-name="Mr Blamo">
         <requires>
             <import addon="xbmc.addon" version="12.0.0"/>
         </requires>
@@ -739,35 +740,38 @@ This is a Non-profit resource, organized solely for educational purposes which i
         </extension>
     </addon>
 
-<addon id="repository.venom" name="[COLOR red]Venom Repository[/COLOR]" version="1.1" provider-name="Android B boy">
-	<extension point="xbmc.addon.repository" name="Silent Hunter">
-		<dir>
-			<info compressed="false">https://ironhide.000webhostapp.com/plugins/addons.xml</info>
-			<checksum>https://ironhide.000webhostapp.com/plugins/addons.xml.md5</checksum>
-			<datadir zip="true">https://ironhide.000webhostapp.com/plugins/</datadir>
-		</dir>
-		<dir>
-            <info compressed="false">https://raw.githubusercontent.com/jsergio123/zips/master/addons.xml</info>
-            <checksum>https://raw.githubusercontent.com/jsergio123/zips/master/addons.xml.md5</checksum>
-            <datadir zip="true">https://raw.githubusercontent.com/jsergio123/zips/master/</datadir>
-        </dir>
-		<dir>
-            <info compressed="false">https://raw.githubusercontent.com/totalrevolution/python-koding/master/zips/addons.xml</info>
-            <checksum>https://raw.githubusercontent.com/totalrevolution/python-koding/master/zips/addons.xml.md5</checksum>
-            <datadir zip="true">https://raw.githubusercontent.com/totalrevolution/python-koding/master/zips/</datadir>
-        </dir>
-		<dir>
-            <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
-            <checksum>https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml.md5</checksum>
-           <datadir zip="true">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/</datadir>
-     </dir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en"></summary>
-		<description lang="en">Android B boy Repo v1.1</description>
-		<genre></genre>
-	</extension>
-</addon>
+    <addon id="repository.venom" name="[COLOR red]Venom Repository[/COLOR]" version="1.2" provider-name="Android B boy">
+        <requires>
+            <import addon="xbmc.addon" version="12.0.0"/>
+        </requires>
+        <extension point="xbmc.addon.repository" name="[COLOR red]Venom Repository[/COLOR]">
+            <info compressed="false">https://raw.githubusercontent.com/AnubisAB/venomrepo/master/_zips/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/AnubisAB/venomrepo/master/_zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/AnubisAB/venomrepo/master/_zips/</datadir>
+            <hashes>false</hashes>
+            <dir>
+                <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
+                <checksum>https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml.md5</checksum>
+                <datadir zip="true">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/</datadir>
+            </dir>
+            <dir>
+                <info compressed="false">https://raw.githubusercontent.com/jsergio123/zips/master/addons.xml</info>
+                <checksum>https://raw.githubusercontent.com/jsergio123/zips/master/addons.xml.md5</checksum>
+                <datadir zip="true">https://raw.githubusercontent.com/jsergio123/zips/master/</datadir>
+            </dir>
+            <dir>
+                <info compressed="false">https://raw.githubusercontent.com/totalrevolution/python-koding/master/zips/addons.xml</info>
+                <checksum>https://raw.githubusercontent.com/totalrevolution/python-koding/master/zips/addons.xml.md5</checksum>
+                <datadir zip="true">https://raw.githubusercontent.com/totalrevolution/python-koding/master/zips/</datadir>
+            </dir>
+        </extension>
+        <extension point="xbmc.addon.metadata">
+            <summary>Venom Official Repository</summary>
+            <description>Venom Official Repository</description>
+            <platform>all</platform>
+            <genre>movies,usa</genre>
+        </extension>
+    </addon>
 
 <addon id="script.69DeathPair" name="[COLOR purple]69 Death [COLOR orange]Pairing Tool[/COLOR]" version="1.2" provider-name="[B][I][COLOR cyan]Klepto[/COLOR][/I][/B]">
 	<requires>
@@ -1013,7 +1017,35 @@ This is a Non-profit resource, organized solely for educational purposes which i
   </extension>
 </addon>
 
-<addon id="script.module.placenta" name="Placenta Module" version="1.6.1" provider-name="Team Afterbirth">
+<addon id="script.module.mutagen"
+       name="mutagen"
+       version="1.22.0"
+       provider-name="Joe Wreschnig">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language></language>
+    <summary lang="en">Mutagen is a Python module to handle audio metadata.</summary>
+    <description lang="en">Mutagen is a Python module to handle audio metadata. It supports ASF, FLAC,
+M4A, Monkey's Audio, MP3, Musepack, Ogg Opus, Ogg FLAC, Ogg Speex, Ogg
+Theora, Ogg Vorbis, True Audio, WavPack and OptimFROG audio files. All
+versions of ID3v2 are supported, and all standard ID3v2.4 frames are
+parsed. It can read Xing headers to accurately calculate the bitrate and
+length of MP3s. ID3 and APEv2 tags can be edited regardless of audio
+format. It can also manipulate Ogg streams on an individual packet/page
+level.</description>
+    <disclaimer lang="en">Code taken from http://code.google.com/p/mutagen/</disclaimer>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <website>http://code.google.com/p/mutagen/</website>
+    <source>https://bitbucket.org/lazka/mutagen/overview</source>
+  </extension>
+</addon>
+
+<addon id="script.module.placenta" name="Placenta Module" version="1.6.4" provider-name="Team Afterbirth">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 		<import addon="script.module.beautifulsoup4"/>
@@ -1090,6 +1122,43 @@ This is a Non-profit resource, organized solely for educational purposes which i
 	</extension>
 </addon>
 
+<addon id="script.module.streamlink.base" name="Streamlink Library" version="2018.07.03" provider-name="Streamlink Devs, Twilight0">
+  <requires>
+    <import addon="xbmc.python" version="2.24.0"/>
+    <import addon="script.module.requests" version="2.12.4"/>
+    <import addon="script.module.futures" version="2.2.0"/>
+    <import addon="script.module.streamlink.crypto" version="1.4.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="resources/lib/"/>
+  <extension point="xbmc.addon.metadata">
+    <summary>Streamlink Library</summary>
+    <description>Streamlink Library for Kodi</description>
+    <platform>all</platform>
+    <license>Simplified BSD</license>
+    <source>https://github.com/Twilight0/script.module.streamlink.base/</source>
+    <language>en</language>
+    <!--<assets>-->
+      <!--<icon>resources/icon.png</icon>-->
+    <!--</assets>-->
+    <news>+ 2018.07.03
+- Plugins updates
+- Various other tweaks pulled from upstream</news>
+  </extension>
+</addon>
+
+<addon id="script.module.streamlink.crypto" name="streamlink.crypto" version="1.4.0" provider-name="Streamlink.crypto">
+  <requires>
+    <import addon="xbmc.python" version="2.14.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>Pure Python implementation of the cryptographic libraries required by Streamlink</summary>
+    <source>https://github.com/Twilight0/script.module.streamlink.crypto</source>
+    <platform>all</platform>
+    <license>MIT</license>
+  </extension>
+</addon>
+
 <addon id="script.module.swiftstreamz" name="Swift Streamz" version="8" provider-name="RACC">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -1112,6 +1181,27 @@ This is a Non-profit resource, organized solely for educational purposes which i
     <email></email>
     <source></source>
   </extension>
+</addon>
+
+<addon id="script.module.thetvdb"
+       name="The TVDB API v2"
+       version="1.0.27"
+       provider-name="marcelveldt">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.3.0"/>
+        <import addon="script.module.simplejson" version="3.3.0"/>
+        <import addon="script.module.simplecache" version="1.0.0"/>
+        <import addon="script.module.arrow" version="0.6.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.addon.metadata">
+        <summary>TheTVDB API v2 python module for Kodi</summary>
+        <description>TheTVDB API v2 python module for Kodi</description>
+        <license>Apache 2.0</license>
+        <source>https://github.com/marcelveldt/script.module.thetvdb</source>
+        <platform>all</platform>
+    </extension>
 </addon>
 
 <addon id="script.module.universalscrapers" name="Universal Scrapers" version="1.0.9.2" provider-name="Team Universal">
@@ -1184,7 +1274,7 @@ This is a Non-profit resource, organized solely for educational purposes which i
 	</extension>
 </addon>
 
-<addon id="script.placenta.artwork" version="1.0.7" name="Placenta Artwork" provider-name="Team Afterbirth">
+<addon id="script.placenta.artwork" version="1.0.8" name="Placenta Artwork" provider-name="Team Afterbirth">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 	</requires>
@@ -1281,6 +1371,34 @@ This is a Non-profit resource, organized solely for educational purposes which i
     <summary lang="en">Proxy for f4m</summary>
     <description lang="en">Use this addon to play F4m v1 and v2 streams</description>
   </extension>
+</addon>
+
+<addon id="service.streamlink.proxy" name="Streamlink Proxy" version="4.1.2" provider-name="Twilight0">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.streamlink.base" version="2018.06.12"/>
+        <!--<import addon="script.module.streamlink.plugins" version="1.0.3"/>-->
+    </requires>
+    <extension point="xbmc.service" library="resources/lib/service.py" start="login"/>
+    <extension point="xbmc.python.pluginsource" library="options.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <language>en de el</language>
+        <summary>Streamlink Proxy</summary>
+        <description>Streamlink Proxy for Kodi</description>
+        <platform>all</platform>
+        <license>GPLv3</license>
+        <source>https://github.com/Twilight0/service.streamlink.proxy</source>
+        <size>172839</size>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+        <news>+ 4.1.2
+- Removed plugins dependency
+- Bumped base module dependency to latest</news>
+    </extension>
 </addon>
 
 <addon id="skin.estuary_killzone" version="1.6.3" name="Estuary KillZone MOD" provider-name="phil65, SchisM, MR Blamo">

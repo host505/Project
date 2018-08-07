@@ -21,6 +21,7 @@ from resources.lib.modules import cleantitle
 from resources.lib.modules import client
 from resources.lib.modules import source_utils
 from resources.lib.modules import dom_parser
+from resources.lib.modules import cfscrape
 
 class source:
     def __init__(self):
@@ -29,9 +30,11 @@ class source:
         self.domains = ['breakfreemovies.biz']
         self.base_link = 'https://alphareign.lol/'
         self.search_link = '/movies.php?list=search&search=%s'
+        self.scraper = cfscrape.create_scraper()
 
     def movie(self, imdb, title, localtitle, aliases, year):
         try:
+            scraper = cfscrape.create_scraper()
             url = urlparse.urljoin(self.base_link, self.search_link)
             url = url  % (title.replace(':', ' ').replace(' ', '+'))
 

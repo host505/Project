@@ -70,10 +70,8 @@ class source:
                                                 'language': "en",
                                                 'url': url_dl,
                                                 'info': quality[1],
-                                                'direct': True,
+                                                'direct': False,
                                                 'debridonly': False})
-                            else:
-                                continue
                         else:
                             continue
                     if url_dl == '':

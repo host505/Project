@@ -2,7 +2,7 @@
 <settings>
     <category label="32310">
         <setting id="appearance.alt" type="action" label="32311" default="-" option="close" action="RunPlugin(plugin://plugin.video.placenta/?action=artwork)" visible="!System.HasAddon(script.placenta.artwork)" />
-        <setting id="appearance.1" type="select" label="32311" values="Collusion|Custom|Dark Elogance|Dark Grain|Exuary|MetaRed|Placenta|Power" default="Placenta" visible="System.HasAddon(script.placenta.artwork)" />
+        <setting id="appearance.1" type="select" label="32311" values="Collusion|Custom|Dark Elogance|Dark Grain|Exuary|MetaRed|Nebula|Placenta|Power" default="Placenta" visible="System.HasAddon(script.placenta.artwork)" />
         <setting id="scrapers.timeout.1" type="slider" label="32312" default="25" range="10,60" option="int" />
         <setting id="trakt.user" type="text" default="" visible="false" />
         <setting id="indicators.alt" type="enum" label="32313" lvalues="32314|32315" default="1" visible="!eq(-1,)" />
@@ -83,6 +83,7 @@
         <setting id="provider.123fox" type="bool" label="123FOX" default="false" />	
         <setting id="provider.123hulu" type="bool" label="123HULU" default="false" />
         <setting id="provider.123netflix" type="bool" label="123NETFLIX" default="true" />
+        <setting id="provider.123movies" type="bool" label="123MOVIES" default="false" />
         <setting id="provider.123moviesgold" type="bool" label="123MOVIESGOLD" default="true" />
         <setting id="provider.1080P" type="bool" label="1080P" default="true" />
         <setting id="provider.afdah" type="bool" label="AFDAH" default="true" />
@@ -115,7 +116,6 @@
         <setting id="provider.huluplus" type="bool" label="HULUPLUS" default="true" />
         <setting id="provider.hulufilm" type="bool" label="HULUFILM" default="true" />
         <setting id="provider.icefilms" type="bool" label="ICEFILMS" default="true" />
-        <setting id="provider.kattv" type="bool" label="KATTV" default="false" />
         <setting id="provider.library" type="bool" label="LIBRARY" default="true" />
         <setting id="provider.movie4kto" type="bool" label="MOVIE4KTO" default="false" />
         <setting id="provider.movie4korg" type="bool" label="MOVIE4K" default="true" />
@@ -133,7 +133,8 @@
         <setting id="provider.series9" type="bool" label="SERIES9" default="true" />
         <setting id="provider.solarmoviez" type="bool" label="SOLARMOVIEZ" default="true" />
         <setting id="provider.timewatch" type="bool" label="TIMETOWATCH" default="false" />
-        <setting id="provider.tvrelease" type="bool" label="TVRELEASE" default="true" />
+        <setting id="provider.tvbox" type="bool" label="TVBOX" default="false" />
+        <setting id="provider.tvrelease" type="bool" label="TVRELEASE" default="false" />
         <setting id="provider.ultrahd" type="bool" label="ULTRAHD" default="true" />
         <setting id="provider.videoscraper" type="bool" label="VIDEOSCRAPER" default="true" />
         <setting id="provider.vodly" type="bool" label="VODLY" default="true" />

@@ -18,6 +18,7 @@ from resources.lib.modules import cleantitle
 from resources.lib.modules import client
 from resources.lib.modules import cache
 from resources.lib.modules import dom_parser2
+from resources.lib.modules import cfscrape
 
 
 class source:
@@ -27,10 +28,12 @@ class source:
         self.domains = ['123yts.net']
         self.base_link = 'http://www0.123yts.net/'
         self.search_link = '/search-movies/%s.html'
+        self.scraper = cfscrape.create_scraper()
 
 
     def movie(self, imdb, title, localtitle, aliases, year):
         try:
+            scraper = cfscrape.create_scraper()
             clean_title = cleantitle.geturl(title)
             search_url = urlparse.urljoin(self.base_link, self.search_link % clean_title.replace('-', '+'))
             r = cache.get(client.request, 1, search_url)
@@ -48,6 +51,7 @@ class source:
 
     def tvshow(self, imdb, tvdb, tvshowtitle, localtvshowtitle, aliases, year):
         try:
+            scraper = cfscrape.create_scraper()
             url = {'imdb': imdb, 'tvdb': tvdb, 'tvshowtitle': tvshowtitle, 'year': year}
             url = urllib.urlencode(url)
             return url
@@ -56,6 +60,7 @@ class source:
 
     def episode(self, url, imdb, tvdb, title, premiered, season, episode):
         try:
+            scraper = cfscrape.create_scraper()
             if url == None: return
 
             url = urlparse.parse_qs(url)
@@ -84,6 +89,7 @@ class source:
 
     def sources(self, url, hostDict, hostprDict):
         try:
+            scraper = cfscrape.create_scraper()
             sources = []
             r = cache.get(client.request, 1, url)
             try:

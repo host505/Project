@@ -1,6 +1,6 @@
-# Addon Name: Patron AIO
-# Addon id: plugin.video.patron.aio
-# Addon Provider: EPB
+# Addon Name: Jen
+# Addon id: plugin.video.jen
+# Addon Provider: Team Jen
 msgid ""
 msgstr ""
 "Project-Id-Version: Jen\n"

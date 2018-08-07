@@ -26,6 +26,8 @@ ownAddon = xbmcaddon.Addon(id=addon_id)
 enable_installa = ownAddon.getSetting('dlimage')
 enable_newswin = ownAddon.getSetting('news_win')
 root_xml_url = ownAddon.getSetting('root_xml')
+if not 'file:' in root_xml_url and not 'http' in root_xml_url:
+    root_xml_url = root_xml_url.decode('base64')
 __builtin__.tvdb_api_key = ownAddon.getSetting('tvdb_api_key')
 __builtin__.tmdb_api_key = ownAddon.getSetting('tmdb_api_key')
 __builtin__.trakt_client_id = ownAddon.getSetting('trakt_api_client_id')
@@ -63,7 +65,7 @@ content_type = "files"
 def root():
     """root menu of the addon"""
     if enable_newswin == 'true':
-        koding.Add_Dir(name='<<< Ultimas Noticias / Latest News >>>', url='{"my_text":"ULtimas Noticias / Latest News[CR]!!!","my_desc":""}', mode='dialog_example', folder=False, icon=os.path.join(art_path,'icon.png'), fanart=os.path.join(art_path,'fanart.jpg'))
+        koding.Add_Dir(name='Latest News And Updates', url='{"my_text":"Latest News[CR]!!!","my_desc":""}', mode='dialog_example', folder=False, icon=os.path.join(art_path,'icon.png'), fanart=os.path.join(art_path,'fanart.jpg'))
     if not get_list(root_xml_url):
         koding.Add_Dir(
             name=_("Message"),
@@ -162,8 +164,12 @@ def scraper_settings():
 
 @route(mode="ResolverSettings")
 def resolver_settings():
-    xbmcaddon.Addon('script.module.resolveurl').openSettings()
-
+    try:
+        import resolveurl
+        xbmcaddon.Addon('script.module.resolveurl').openSettings()
+    except:
+        import urlresolver
+        xbmcaddon.Addon('script.module.urlresolver').openSettings()
 
 @route(mode="ClearTraktAccount")
 def clear_trakt_account():
@@ -198,7 +204,7 @@ def clear_cache():
             xbmc.translatePath(xbmcaddon.Addon().getSetting("cache_folder")),
             "artcache")
         koding.Delete_Folders(dest_folder)
-    xbmc.log("running hook:", xbmc.LOGNOTICE)
+    xbmc.log("running hook: clear cache", xbmc.LOGNOTICE)
     run_hook("clear_cache")
 
 

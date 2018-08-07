@@ -18,6 +18,7 @@ from resources.lib.modules import cleantitle
 from resources.lib.modules import client
 from resources.lib.modules import cache
 from resources.lib.modules import dom_parser2
+from resources.lib.modules import cfscrape
 
 class source:
     def __init__(self):
@@ -26,10 +27,12 @@ class source:
         self.domains = ['hdmega.unblckd.cc']
         self.base_link = 'http://hdmega.unblckd.ink/'
         self.search_link = '/search-movies/%s.html'
+        self.scraper = cfscrape.create_scraper()
 
 
     def movie(self, imdb, title, localtitle, aliases, year):
         try:
+            scraper = cfscrape.create_scraper()
             clean_title = cleantitle.geturl(title)
             search_url = urlparse.urljoin(self.base_link, self.search_link % clean_title.replace('-', '+'))
             r = cache.get(client.request, 1, search_url)

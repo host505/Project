@@ -60,7 +60,7 @@ addon_path= xbmc.translatePath(('special://home/addons/%s' % (addon_id))).decode
 #######################################################################
 
 
-my_settings = {'root_xml':'https://raw.githubusercontent.com/m3rc3/PatronAIO/master/patronmain.xml'}
+my_settings = {'root_xml':'file://jen_main.xml'}
 
 
 def main():
