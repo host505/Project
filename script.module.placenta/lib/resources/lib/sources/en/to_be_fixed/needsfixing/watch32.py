@@ -60,6 +60,7 @@ class source:
             url = urlparse.urljoin(self.base_link, self.watch_link) 
 
            #url = url % (title.replace(':', '').replace(' ','_'), year)
+            url = url % (re.sub('[: \-]+','_',title), year)
 
             search_results = client.request(url)
             varid = re.compile('var frame_url = "(.+?)"',re.DOTALL).findall(search_results)[0].replace('/embed/','/streamdrive/info/')
