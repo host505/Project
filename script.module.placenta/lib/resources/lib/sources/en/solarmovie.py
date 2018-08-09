@@ -13,6 +13,13 @@
 # Addon Provider: Mr.Blamo
 
 
+import re,traceback,urllib,urlparse,hashlib,random,string,json,base64,sys,xbmc,resolveurl
+
+from resources.lib.modules import cleantitle
+from resources.lib.modules import client
+from resources.lib.modules import log_utils
+from resources.lib.modules import source_utils
+
 import re,urllib,urlparse,hashlib,random,string,json,base64,sys,xbmc
 
 from resources.lib.modules import cleantitle
@@ -42,10 +49,41 @@ CODE = '''def retA():
     return %s
 param = retA()'''
 
+
 class source:
     def __init__(self):
         self.priority = 1
         self.language = ['en']
+
+        self.domains = ['solarmovie.ms']
+        self.base_link = 'http://www.solarmovie.ms'
+        self.search_link = '/keywords/%s'
+		# Testing: Star Wars: Episode II - Attack Of The Clones
+		# Failed:  http://www.solarmovie.ms/keywords/star%20wars%20%20episode%20ii%20%20%20attack%20of%20the%20clones
+        # Working: http://www.solarmovie.ms/keywords/Star%20Wars:%20Episode%20II%20-%20Attack%20Of%20The%20Clones
+		# Changing ANY punctuation or spaces results in failure!!! (different case is fine)
+		# http://www.solarmovie.ms/watch-star-wars-episode-ii-attack-of-the-clones-online.html
+
+    def movie(self, imdb, title, localtitle, aliases, year):
+        try:
+#           search_id = title.lower().replace(':', ' ').replace('-', ' ') # see __init__
+
+#           start_url = urlparse.urljoin(self.base_link, (self.search_link % (search_id.replace(' ','%20'))))         
+            start_url = urlparse.urljoin(self.base_link, (self.search_link % (title.replace(' ','%20'))))  
+            
+            headers={'User-Agent':client.randomagent()}
+            html = client.request(start_url,headers=headers)    		
+            
+            match = re.compile('<span class="name"><a title="(.+?)" href="(.+?)".+?title="(.+?)"',re.DOTALL).findall(html)
+            for name,item_url, link_year in match:
+                if year in link_year:                                                        
+                    if cleantitle.get(title) in cleantitle.get(name):
+                        return item_url
+            return
+        except:
+            failure = traceback.format_exc()
+            log_utils.log('SolarMovie - Exception: \n' + str(failure))
+
         self.domains = ['solarmoviez.to', 'solarmoviez.ru']
         self.base_link = 'https://solarmoviez.ru'
         self.search_link = '/movie/search/%s.html'
@@ -127,6 +165,7 @@ class source:
                 url = [i[0] for i in results if self.matchAlias(i[1], aliases)][0]
             return url
         except:
+
             return
 
     def sources(self, url, hostDict, hostprDict):
@@ -134,6 +173,45 @@ class source:
             sources = []
 
             if url is None: return sources
+
+
+            headers={'User-Agent':client.randomagent()}
+            html = client.request(url,headers=headers)
+
+            Links = re.compile('id="link_.+?target="_blank" id="(.+?)"',re.DOTALL).findall(html)
+            for vid_url in Links:
+                if 'openload' in vid_url:
+                    try:
+                        source_html   = client.request(vid_url,headers=headers)
+                        source_string = re.compile('description" content="(.+?)"',re.DOTALL).findall(source_html)[0]
+                        quality,info = source_utils.get_release_quality(source_string, vid_url)
+                    except:
+                        quality = 'DVD'
+                        info = []
+                    sources.append({'source': 'Openload','quality': quality,'language': 'en','url':vid_url,'info':info,'direct': False,'debridonly': False})
+                elif 'streamango' in vid_url:
+                    try:  
+                        source_html = client.request(vid_url,headers=headers)
+                        source_string = re.compile('description" content="(.+?)"',re.DOTALL).findall(source_html)[0]
+                        quality,info = source_utils.get_release_quality(source_string, vid_url)  
+                    except:
+                        quality = 'DVD'
+                        info = []
+                    sources.append({'source': 'Streamango','quality': quality,'language': 'en','url':vid_url,'info':info,'direct': False,'debridonly': False})
+                else:
+                    if resolveurl.HostedMediaFile(vid_url):
+                        quality,info = source_utils.get_release_quality(vid_url, vid_url)  
+                        host = vid_url.split('//')[1].replace('www.','')
+                        host = host.split('/')[0].split('.')[0].title()
+                        sources.append({'source': host,'quality': quality,'language': 'en','url':vid_url,'info':info,'direct': False,'debridonly': False})
+            return sources
+        except:
+            failure = traceback.format_exc()
+            log_utils.log('SolarMovie - Exception: \n' + str(failure))
+            return sources
+
+    def resolve(self, url):
+        return url
 
             data = urlparse.parse_qs(url)
             data = dict([(i, data[i][0]) if data[i] else (i, '') for i in data])
@@ -262,3 +340,4 @@ class source:
             return {'x': x, 'y': y}
         except:
             pass
+

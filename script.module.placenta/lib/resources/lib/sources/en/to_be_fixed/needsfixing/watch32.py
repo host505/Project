@@ -29,6 +29,11 @@ class source:
         self.domains = ['watch32hd.co']
         self.base_link = 'https://watch32hd.co/'
         self.search_link = '/results/%s'
+        self.watch_link = '/watch?v=%s_%s'  
+		# Working: https://watch32hd.co/results?q=guardians+of+the+galaxy
+		#   
+		# https://watch32hd.co/watch?v=Guardians_Of_The_Galaxy_2014#video=ggvOQDQLiMEw0h2fAil9YwZbiUtwuMcBfCs1mQ_4
+		# https://watch32hd.co/watch?v=Guardians_Of_The_Galaxy_2014
 
     def movie(self, imdb, title, localtitle, aliases, year):
         try:
@@ -51,11 +56,13 @@ class source:
             title = data['title']
             year = data['year']
 
-            url = urlparse.urljoin(self.base_link, self.search_link) 
-            url = url % (title.replace(':', '').replace(' ','_'),year)
+           #url = urlparse.urljoin(self.base_link, self.search_link) 
+            url = urlparse.urljoin(self.base_link, self.watch_link) 
+
+           #url = url % (title.replace(':', '').replace(' ','_'), year)
+            url = url % (re.sub('[: \-]+','_',title), year)
 
             search_results = client.request(url)
-
             varid = re.compile('var frame_url = "(.+?)"',re.DOTALL).findall(search_results)[0].replace('/embed/','/streamdrive/info/')
             res_chk = re.compile('class="title"><h1>(.+?)</h1>',re.DOTALL).findall(search_results)[0]
             varid = 'http:'+varid
