@@ -20,7 +20,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.audio.thunderstruck" name="Thunderstruck" version="2.5.6" provider-name="Rogue/ThunderStruck">
+<addon id="plugin.audio.thunderstruck" name="Thunderstruck" version="2.5.7" provider-name="Rogue/ThunderStruck">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.t0mm0.common" version="1.1.0"/>
@@ -33,6 +33,7 @@
     <extension point="xbmc.service" library="playerMP3.py" start="startup" />
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
+        <reuselanguageinvoker>false</reuselanguageinvoker>
         <summary>A music streaming collection</summary>
         <description>Browse, stream or download your favourite songs and albums</description>
         <news></news>
@@ -275,7 +276,7 @@ This is a Non-profit resource, organized solely for educational purposes which i
     </extension>
 </addon>
 
-<addon id="plugin.video.chappaai" name="Chappa'ai" version="G.0.7" provider-name="Mr.Blamo">
+<addon id="plugin.video.chappaai" name="Chappa'ai" version="G.0.8" provider-name="Mr.Blamo">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.requests" version="2.9.1"/>
@@ -315,6 +316,7 @@ This is a Non-profit resource, organized solely for educational purposes which i
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
+        <reuselanguageinvoker>false</reuselanguageinvoker>
 		<language></language>
 		<summary lang="en">TMDb, TVDb, Trakt, AudioDb and LastFM browser</summary>
 		<description lang="en">Browse The MovieDb, The TVDb, Trakt, The AudioDb and LastFM and pass info along to library or an addon to try and play it. Needs player-files and the appropriate addon to actually play.</description>
@@ -777,7 +779,7 @@ This is a Non-profit resource, organized solely for educational purposes which i
     </extension>
 </addon>
 
-<addon id="script.extendedinfo" name="[COLOR purple]Wraith[/COLOR]" version="9.1.0" provider-name="Revived by [COLOR purple]Mr.Blamo[/COLOR], original work by phil65">
+<addon id="script.extendedinfo" name="[COLOR purple]Wraith[/COLOR]" version="9.1.1" provider-name="Revived by [COLOR purple]Mr.Blamo[/COLOR], original work by phil65">
   <requires>
     <import addon="xbmc.python"                     version="2.19.0"/>
     <import addon="plugin.program.super.favourites"/>
@@ -803,6 +805,7 @@ This is a Non-profit resource, organized solely for educational purposes which i
     <summary lang="nl">[COLOR purple]Wraith[/COLOR]</summary>
     <description lang="nl">Dit script biedt meerdere mogelijkheden om online content weer te geven in skins en bevat ook een complete MovieDB browser inclusief info dialogen voor verscheidene media types. Gebruikte diensten zijn themoviedb.org, theaudiodb.org, Trakt.TV, omdbapi.com en nog veel meer. Vereist skin implementatie voor de meeste functies. Gebruikt Wraith voor afspeel en bibliotheek functies.</description>
     <platform>all</platform>
+    <reuselanguageinvoker>false</reuselanguageinvoker>
     <genre>movies,tv,trailers</genre>
     <video_guide>3nlzITuJizg</video_guide>
     <video_preview>OIp3Ry7qml8</video_preview>
