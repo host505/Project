@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.blamo" version="2.6.2" name="Death Streams" provider-name="Mr.Blamo">
+<addon id="plugin.video.blamo" version="2.6.3" name="Death Streams" provider-name="Mr.Blamo">
     <requires>        
 		<import addon="xbmc.python" version="2.19.0"/>
         <import addon="script.module.pyxbmct"/>
@@ -28,6 +28,7 @@ The author is in no way affiliated with Kodi, Team Kodi, or the XBMC Foundation.
 This is a Non-profit resource, organized solely for educational purposes which is protected under the Fair-Use doctrine of the Copyright Act, Specifically section 107, which does promote freedom of expression, by permitting the unlicensed use of copyright-protected works.
 </disclaimer>
 		<platform>all</platform>
+        <reuselanguageinvoker>false</reuselanguageinvoker>
 		<license>Beerware rev. 42</license>
 	<platform>all</platform>
 	</extension>
