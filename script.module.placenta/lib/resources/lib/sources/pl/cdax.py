@@ -10,7 +10,7 @@
 
 # Addon Name: Placenta
 # Addon id: plugin.video.placenta
-# Addon Provider: Mr.Blamo
+# Addon Provider: Mr.blamo
 
 
 import urllib, urlparse
@@ -23,9 +23,9 @@ class source:
     def __init__(self):
         self.priority = 1
         self.language = ['pl']
-        self.domains = ['cda-x.pl']
+        self.domains = ['cdax.online']
         
-        self.base_link = 'http://cda-x.pl'
+        self.base_link = 'http://cdax.online/'
         self.search_link = '/?s=%s'
         
     def movie(self, imdb, title, localtitle, aliases, year):

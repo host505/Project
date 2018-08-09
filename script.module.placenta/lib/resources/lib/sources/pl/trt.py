@@ -10,7 +10,7 @@
 
 # Addon Name: Placenta
 # Addon id: plugin.video.placenta
-# Addon Provider: Mr.Blamo
+# Addon Provider: Mr.blamo
 
 
 import re, urllib, urlparse, base64, json
