@@ -80,92 +80,101 @@ class source:
 
 			query = '%s s%02de%02d' % (data['tvshowtitle'], int(data['season']), int(data['episode'])) if 'tvshowtitle' in data else '%s %s' % (data['title'], data['year'])
 			#query = re.sub('(\\\|/| -|:|;|\*|\?|"|\'|<|>|\|)', ' ', query)
-			query = re.sub('[\\\\:;*?"<>|/ \+\']', '-', query)
+			query = re.sub('[\\\\:;*?"<>|/ \+\']+', '-', query)
 
 			url = self.search_link % urllib.quote_plus(query)
 			url = urlparse.urljoin(self.base_link, url)
 			log_utils.log('\n\n\n\n\n\nquery, url: %s, %s' % (query,url))
 			r = client.request(url)
 
-			#posts = client.parseDOM(r, 'article', attrs={'id': 'post-\d+'})
-			#posts = client.parseDOM(posts, 'h1')
-			#posts = zip(client.parseDOM(posts, 'a', ret= 'href'),(client.parseDOM(posts, 'a', attrs={'rel': 'bookmark'})))
-
+			
 			# grab the (only?) relevant div and cut off the footer
 			r = client.parseDOM(r, "div", attrs={'class': 'entry-content'})[0]
-			log_utils.log('~~~~~~~ parsed DOM')
 			r = re.sub('shareaholic-canvas.+', '', r, flags=re.DOTALL)
 			#log_utils.log(r)
-			
-			# check for actual <a> links then wipe them all
+		
+		
+					
+			# gather actual <a> links then clear all <a>/<img> to prep for naked-url scan
+			# inner text could be useful if url looks like http://somehost.com/ugly_hash_377cbc738eff
+			a_txt = ''
+			a_url = ''
 			a_txt = client.parseDOM(r, "a", attrs={'href': '.+?'})
 			a_url = client.parseDOM(r, "a", ret = "href")
 			r = re.sub('<a .+?</a>', '', r, flags=re.DOTALL)
-			for url in a_url:
-				log_utils.log('url: ' + url)
+			r = re.sub('<img .+?>', '', r, flags=re.DOTALL)	
 			
-			# remove <img>
-			r = re.sub('<img .+?>', '', r, flags=re.DOTALL)
-			
-			# get naked urls
-			links = re.findall('https?://[^ <"\'\s]+', r, re.DOTALL)
-			#links = re.compile('https?://[^ <"]+',re.DOTALL).findall(r)
-			for url in links:
-				log_utils.log('url: ' + url)
+		
+			# check pre blocks for size and gather naked-urls
+			size = ''			
+			pre_txt = []
+			pre_url = []
+			pres = client.parseDOM(r, "pre", attrs={'style': '.+?'})
+			for pre in pres:
+				try: size = re.findall('([0-9,\.]+ ?(?:GB|GiB|MB|MiB))', pre, re.DOTALL)[0].strip()
+				except: pass
 				
-			pairs = zip(a_url,a_txt)
-			pairs.append(zip(links,links))
-			for pair in pairs:
-				log_utils.log('pair: %s, %s' % (pair[1],pair[0]))
+				#log_utils.log('\n**pre size: ' + size)
+				url0 = re.findall('https?://[^ <"\'\s]+', pre, re.DOTALL) # bad form but works with this site
+				txt0 = [size] * len(url0)
+				pre_url = pre_url + url0
+				pre_txt = pre_txt + txt0 # we're just grabbing raw urls so there's no other info
+				
+			r = re.sub('<pre .+?</pre>', '', r, flags=re.DOTALL)	
 
 			
-			for item in posts:
-
+			# assume info at page top is true for all movie links, and only movie links
+			#  (and that otherwise, only <pre>'s have scrapable sizes)
+			size = ''
+			if not 'tvshowtitle' in data:
 				try:
-					name = item[1]
-					name = client.replaceHTMLCodes(name)
+					size = re.findall('([0-9,\.]+ ?(?:GB|GiB|MB|MiB))', r, re.DOTALL)[0].strip()
+					log_utils.log('** found size outside pre: ' + size)
+				except: pass
 
-					t = re.sub('(\.|\(|\[|\s)(\d{4}|S\d+E\d+|S\d+|3D)(\.|\)|\]|\s|)(.+|)', '', name, re.I)
+			
+			# get naked urls (after exhausting <a>'s and <pre>'s)
+			# note: all examples use full titles in links, so we can be careful
+			raw_url = re.findall('https?://[^ <"\'\s]+', r, re.DOTALL) # bad form but works with this site
+			raw_txt = [size] * len(raw_url) # we're just grabbing raw urls so there's no other info
+			for i in range(len(a_url)):
+				log_utils.log('  a: %s ~~ %s' % (a_txt[i],a_url[i]))	
+			for i in range(len(pre_url)):
+				log_utils.log('pre: %s ~~ %s' % (pre_txt[i],pre_url[i]))
+			for i in range(len(raw_url)):
+				log_utils.log('raw: %s ~~ %s' % (raw_txt[i],raw_url[i]))
+			
+			
+			pairs = zip(a_url+pre_url+raw_url, a_txt+pre_txt+raw_txt)
+			for pair in pairs:
+				try:
+					url, info = str(pair[0]), re.sub('<.+?>','',pair[1]) # usually (??) no <span> inside
+					#log_utils.log('pair: %s / %s' % (info,url))
+					
+					if any(x in url for x in ['.rar', '.zip', '.iso']): raise Exception()
+					if not query.lower() in re.sub('[\\\\:;*?"<>|/ \+\'\.]+', '-', url+info).lower(): raise Exception()
+					# if they start using urls with only hashes, could allow for major hosters here
 
-					if not cleantitle.get(t) == cleantitle.get(title): raise Exception()
+					try:
+						size = re.findall('([0-9,\.]+ ?(?:GB|GiB|MB|MiB))', info, re.DOTALL)[0] + size
+							# size is pre-loaded for movies only: but prepend any size found in a <pre>
+						div = 1 if size.endswith(('GB', 'GiB')) else 1024
+						size = float(re.sub('[^0-9|/.|/,]', '', size)) / div
+						size = '%.2f GB' % size
+					except:
+						pass
+					
+					quality, info = source_utils.get_release_quality(url,info)
+					info.append(size)
+					log_utils.log('pair: [%s / %s] %s' % (quality,' | '.join(info),url))
+					
+					url = url.encode('utf-8')
+					hostDict = hostDict + hostprDict
 
-					y = re.findall('[\.|\(|\[|\s](\d{4}|S\d+E\d+|S\d+)[\.|\)|\]|\s]', name, re.I)[-1].upper()
-
-					if not y == hdlr: raise Exception()
-
-					r = client.request(item[0], referer= self.base_link)
-					r = client.parseDOM(r, 'article', attrs={'id': 'post-\d+'})
-					#links = re.findall('>Single Links</b>(.+?)<p><b><span', data, re.DOTALL)
-					links = [i for i in client.parseDOM(r, 'p') if 'Single Links' in i]
-					links = zip(client.parseDOM(links, 'a', ret='href'),
-								client.parseDOM(links, 'a', attrs={'href': '.+?'}))
-
-					for item in links:
-						try:
-							quality, info = source_utils.get_release_quality(item[1], item[0])
-							try:
-								size = re.findall('((?:\d+\.\d+|\d+\,\d+|\d+) (?:GB|GiB|MB|MiB))', r[0], re.DOTALL)[0].strip()
-								div = 1 if size.endswith(('GB', 'GiB')) else 1024
-								size = float(re.sub('[^0-9|/.|/,]', '', size)) / div
-								size = '%.2f GB' % size
-								info.append(size)
-							except:
-								pass
-
-							info = ' | '.join(info)
-
-							if any(x in item[0] for x in ['.rar', '.zip', '.iso']): raise Exception()
-							url = client.replaceHTMLCodes(item[0])
-							url = url.encode('utf-8')
-
-							hostDict = hostDict + hostprDict
-
-							valid, host = source_utils.is_host_valid(url, hostDict)
-							if not valid: continue
-							sources.append({'source': host, 'quality': quality, 'language': 'en', 'url': url,
-											'info': info, 'direct': False, 'debridonly': True})
-						except:
-							pass
+					valid, host = source_utils.is_host_valid(url, hostDict)
+					if not valid: continue
+					sources.append({'source': host, 'quality': quality, 'language': 'en', 'url': url,
+									'info': info, 'direct': False, 'debridonly': True})
 
 				except:
 					pass
@@ -180,7 +189,7 @@ class source:
 
 
 '''
-EXAMPLE: <a> links after "Single Link" (note no "S")
+EXAMPLE: text urls after "Single Link" (note no "S")
 <div class="entry-content">
 <div style="text-align:center"><img src="https://i103.fastpic.ru/big/2018/0808/81/371ccc697bd9da5d664322cee07a1581.jpg" /></div>
 <div style="text-align:center"><span style="font-weight:bold">Deadpool 2 (2018) 720p BluRay x264 DTS-HDC</span><br />
@@ -222,7 +231,7 @@ EXAMPLE: <a> link but to a .iso file
 <a href="https://nitroflare.com/view/D11B2E1CEEB4D00/Avengers.Age.Of.Ultron.UHDBD-TERMiNAL.part02.rar">Avengers.Age.Of.Ultron.UHDBD-TERMiNAL.part02.rar</a><br />
 
 
-EXAMPLE: Plain text inside (shared) <p>
+EXAMPLE: Plain text inside sometimes-shared) <p> tags
 <div class="entry-content">
 ...
 <span style="font-weight:bold"><span style="color:#FF0000">Download</span></span></p>
