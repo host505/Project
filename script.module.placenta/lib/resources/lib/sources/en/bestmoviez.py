@@ -79,19 +79,17 @@ class source:
 			hdlr = 'S%02dE%02d' % (int(data['season']), int(data['episode'])) if 'tvshowtitle' in data else data['year']
 
 			query = '%s s%02de%02d' % (data['tvshowtitle'], int(data['season']), int(data['episode'])) if 'tvshowtitle' in data else '%s %s' % (data['title'], data['year'])
-			#query = re.sub('(\\\|/| -|:|;|\*|\?|"|\'|<|>|\|)', ' ', query)
 			query = re.sub('[\\\\:;*?"<>|/ \+\']+', '-', query)
 
 			url = self.search_link % urllib.quote_plus(query)
 			url = urlparse.urljoin(self.base_link, url)
-			log_utils.log('\n\n\n\n\n\nquery, url: %s, %s' % (query,url))
+			#log_utils.log('\n\n\n\n\n\nquery, url: %s, %s' % (query,url))
 			r = client.request(url)
 
 			
 			# grab the (only?) relevant div and cut off the footer
 			r = client.parseDOM(r, "div", attrs={'class': 'entry-content'})[0]
 			r = re.sub('shareaholic-canvas.+', '', r, flags=re.DOTALL)
-			#log_utils.log(r)
 		
 		
 					
@@ -114,7 +112,6 @@ class source:
 				try: size = re.findall('([0-9,\.]+ ?(?:GB|GiB|MB|MiB))', pre)[0]
 				except: pass
 				
-				#log_utils.log('\n**pre size: ' + size)
 				url0 = re.findall('https?://[^ <"\'\s]+', pre, re.DOTALL) # bad form but works with this site
 				txt0 = [size] * len(url0)
 				pre_url = pre_url + url0
@@ -171,7 +168,7 @@ class source:
 					quality, info = source_utils.get_release_quality(url,info)
 					info.append(size0)
 					info = ' | '.join(info)
-					log_utils.log('** pair: [%s / %s] %s' % (quality,info,url))
+					#log_utils.log('** pair: [%s / %s] %s' % (quality,info,url))
 					
 					url = url.encode('utf-8')
 					hostDict = hostDict + hostprDict
