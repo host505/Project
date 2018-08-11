@@ -421,7 +421,7 @@ This is a Non-profit resource, organized solely for educational purposes which i
 	</extension>
 </addon>
 
-<addon id="plugin.video.legendary" version="2.0" name="Legendary" provider-name="Mr.Blamo">
+<addon id="plugin.video.legendary" version="2.1" name="Legendary" provider-name="In Reality Mr.Blamo">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0" />
 		<import addon="script.module.legendary" />
@@ -437,7 +437,7 @@ This is a Non-profit resource, organized solely for educational purposes which i
 	<extension point="xbmc.service" library="service.py" start="startup" />
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">LEGENDARY TRY ME</summary>
-		<description>Covenant Fork from Echo/Colossus era with Team Afterbirth's updates and new code.</description>
+		<description>Covenant Fork from Echo/Colossus era with Team Afterbirth's updates and new code. Try me</description>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
 		<forum></forum>
