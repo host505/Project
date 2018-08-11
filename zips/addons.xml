@@ -421,7 +421,7 @@ This is a Non-profit resource, organized solely for educational purposes which i
 	</extension>
 </addon>
 
-<addon id="plugin.video.legendary" version="2.2" name="Legendary" provider-name="In Reality Mr.Blamo">
+<addon id="plugin.video.legendary" version="2.3" name="Legendary" provider-name="In Reality Mr.Blamo">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0" />
 		<import addon="script.module.legendary" />
@@ -461,6 +461,7 @@ CFSCRAPE Fix
 Moderator Disabled
 Fixed Trakt On Deck Magical Dissapearing Act
 Fixed search issue caused by character accents
+Really STICKBOY
 		</news>
 	</extension>
 </addon>
