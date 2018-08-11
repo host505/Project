@@ -111,7 +111,7 @@ class source:
 			pre_url = []
 			pres = client.parseDOM(r, "pre", attrs={'style': '.+?'})
 			for pre in pres:
-				try: size = re.findall('([0-9,\.]+ ?(?:GB|GiB|MB|MiB))', pre, re.DOTALL)[0].strip()
+				try: size = re.findall('([0-9,\.]+ ?(?:GB|GiB|MB|MiB))', pre)[0]
 				except: pass
 				
 				#log_utils.log('\n**pre size: ' + size)
@@ -127,9 +127,7 @@ class source:
 			#  (and that otherwise, only <pre>'s have scrapable sizes)
 			size = ''
 			if not 'tvshowtitle' in data:
-				try:
-					size = re.findall('([0-9,\.]+ ?(?:GB|GiB|MB|MiB))', r, re.DOTALL)[0].strip()
-					log_utils.log('** found size outside pre: ' + size)
+				try: size = " " + re.findall('([0-9,\.]+ ?(?:GB|GiB|MB|MiB))', r)[0]
 				except: pass
 
 			
@@ -137,36 +135,43 @@ class source:
 			# note: all examples use full titles in links, so we can be careful
 			raw_url = re.findall('https?://[^ <"\'\s]+', r, re.DOTALL) # bad form but works with this site
 			raw_txt = [size] * len(raw_url) # we're just grabbing raw urls so there's no other info
-			for i in range(len(a_url)):
-				log_utils.log('  a: %s ~~ %s' % (a_txt[i],a_url[i]))	
-			for i in range(len(pre_url)):
-				log_utils.log('pre: %s ~~ %s' % (pre_txt[i],pre_url[i]))
-			for i in range(len(raw_url)):
-				log_utils.log('raw: %s ~~ %s' % (raw_txt[i],raw_url[i]))
+
 			
-			
+			# combine the 3 types of scrapes
 			pairs = zip(a_url+pre_url+raw_url, a_txt+pre_txt+raw_txt)
+
 			for pair in pairs:
 				try:
-					url, info = str(pair[0]), re.sub('<.+?>','',pair[1]) # usually (??) no <span> inside
-					#log_utils.log('pair: %s / %s' % (info,url))
+					url = str(pair[0])
+					info = re.sub('<.+?>','',pair[1]) #+ size  # usually (??) no <span> inside
 					
+					# immediately abandon pairs with undesired traits
+					#  (if they stop using urls w/ titles, would need to accomodate here)
 					if any(x in url for x in ['.rar', '.zip', '.iso']): raise Exception()
 					if not query.lower() in re.sub('[\\\\:;*?"<>|/ \+\'\.]+', '-', url+info).lower(): raise Exception()
-					# if they start using urls with only hashes, could allow for major hosters here
-
+					
+					
+					# establish size0 for this pair: 'size' is pre-loaded for movies only...
+					#  ...but prepend 'info' to lead with more-specific sizes (from a <pre>)
+					size0 = info + " " + size
+					
+					
+					# grab first reasonable data size from size0 string
 					try:
-						size = re.findall('([0-9,\.]+ ?(?:GB|GiB|MB|MiB))', info, re.DOTALL)[0] + size
-							# size is pre-loaded for movies only: but prepend any size found in a <pre>
-						div = 1 if size.endswith(('GB', 'GiB')) else 1024
-						size = float(re.sub('[^0-9|/.|/,]', '', size)) / div
-						size = '%.2f GB' % size
+						size0 = re.findall('([0-9,\.]+ ?(?:GB|GiB|MB|MiB))', size0)[0]
+						div = 1 if size0.endswith(('GB', 'GiB')) else 1024
+						size0 = float(re.sub('[^0-9\.]', '', size0)) / div
+						size0 = '%.2f GB' % size0
 					except:
+						size0 = ''
 						pass
 					
+					
+					# process through source_tools and hint with size0 
 					quality, info = source_utils.get_release_quality(url,info)
-					info.append(size)
-					log_utils.log('pair: [%s / %s] %s' % (quality,' | '.join(info),url))
+					info.append(size0)
+					info = ' | '.join(info)
+					log_utils.log('** pair: [%s / %s] %s' % (quality,info,url))
 					
 					url = url.encode('utf-8')
 					hostDict = hostDict + hostprDict
