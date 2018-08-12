@@ -421,51 +421,6 @@ This is a Non-profit resource, organized solely for educational purposes which i
 	</extension>
 </addon>
 
-<addon id="plugin.video.legendary" version="2.3" name="Legendary" provider-name="In Reality Mr.Blamo">
-	<requires>
-		<import addon="xbmc.python" version="2.19.0" />
-		<import addon="script.module.legendary" />
-		<import addon="script.legendary.artwork" />
-		<import addon="script.legendary.metadata" />
-		<import addon="script.module.resolveurl" />
-		<import addon="script.module.requests" />
-		<import addon="script.module.metahandler" version="1.0.0" />
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="Legendary.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.service" library="service.py" start="startup" />
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">LEGENDARY TRY ME</summary>
-		<description>Covenant Fork from Echo/Colossus era with Team incursion Afterbirth's updates and new code. Try me STICKBOY. CREDIT TO AFTEERBIRTH AND INCURSION GOOD JOB BUD</description>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
-		<forum></forum>
-		<website></website>
-		<source></source>
-        <disclaimer lang="en">The author is not responsible for the use of this addon. The author is not responsible for the content found using this addon. The author does not host or own any content found within this addon.
-The author is in no way affiliated with Kodi, Team Kodi, or the XBMC Foundation.
-This is a Non-profit resource, organized solely for educational purposes which is protected under the Fair-Use doctrine of the Copyright Act, Specifically section 107, which does promote freedom of expression, by permitting the unlicensed use of copyright-protected works.
-</disclaimer>
-		<assets>
-			<icon>icon.png</icon>
-			<fanart>fanart.jpg</fanart>
-    			<screenshot>resources/screenshots/screenshot-01.jpg</screenshot>
-    			<screenshot>resources/screenshots/screenshot-02.jpg</screenshot>
-    			<screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
-		</assets>
-		<news>
-v0.1.17 (APR-2018)
-Even more Scraper Fixes
-CFSCRAPE Fix
-Moderator Disabled
-Fixed Trakt On Deck Magical Dissapearing Act
-Fixed search issue caused by character accents
-Really STICKBOY
-		</news>
-	</extension>
-</addon>
-
 <addon id="plugin.video.live.streamspro"
        name="LiveStreamsPro"
        version="2.8.1"
@@ -884,30 +839,6 @@ This is a Non-profit resource, organized solely for educational purposes which i
   </extension>
 </addon>
 
-<addon id="script.legendary.artwork" version="2.1" name="Legendary Artwork" provider-name="Mr.Blamo">
-	<requires>
-		<import addon="xbmc.python" version="2.19.0"/>
-	</requires>
-	<extension point="xbmc.python.module" library="lib" />
-	<extension point="xbmc.addon.metadata">
-		<summary>Themes for the Legendary Addon Really Bud</summary>
-		<description></description>
-		<platform>all</platform>
-	</extension>
-</addon>
-
-<addon id="script.legendary.metadata" version="1.0.5" name="Legendary Metadata" provider-name="Mr.Blamo">
-	<requires>
-		<import addon="xbmc.python" version="2.19.0"/>
-	</requires>
-	<extension point="xbmc.python.module" library="lib" />
-	<extension point="xbmc.addon.metadata">
-		<summary>Metadata for the Legendary Addon Really</summary>
-		<description>Metadata for Legendary are maintained separately to make distribution of the the addon itself easier/faster.</description>
-		<platform>all</platform>
-	</extension>
-</addon>
-
 <addon id="script.module.aragon.net" name="Aragon Live Net" version="1.2" provider-name="RACC">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -984,18 +915,6 @@ This is a Non-profit resource, organized solely for educational purposes which i
 </disclaimer>
 		<platform>all</platform>
 		<license>Beerware rev. 42</license>
-	</extension>
-</addon>
-
-<addon id="script.module.legendary" name="Legendary Module" version="2.0" provider-name="Mr.Blamo">
-	<requires>
-		<import addon="xbmc.python" version="2.1.0" />
-		<import addon="script.module.beautifulsoup4"/>
-	</requires>
-	<extension point="xbmc.python.module" library="lib" />
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<summary lang="en">LEGENDARY TRY ME</summary>
 	</extension>
 </addon>
 
