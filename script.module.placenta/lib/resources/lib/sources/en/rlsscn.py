@@ -12,7 +12,7 @@
 # Addon id: plugin.video.placenta
 # Addon Provider: Mr.Blamo
 
-import requests, re
+import requests, re, traceback
 from bs4 import BeautifulSoup
 from resources.lib.modules import client
 from resources.lib.modules import source_utils
@@ -42,8 +42,11 @@ class source:
 
 	def movie(self, imdb, title, localtitle, aliases, year):
 		try:
-			url = {'imdb': imdb, 'title': title, 'localtitle': localtitle, 'aliases': aliases, 'year': year}
+			url = {'imdb': imdb, 'title': title, 'year': year}
+			return url
 		except:
+			failure = traceback.format_exc()
+			log_utils.log('RLSSCN - Exception: \n' + str(failure))
 			return
 
 	def tvshow(self, imdb, tvdb, tvshowtitle, localtvshowtitle, aliases, year):
@@ -60,6 +63,8 @@ class source:
 			url['premiered'] = premiered
 			return url
 		except:
+			failure = traceback.format_exc()
+			log_utils.log('RLSSCN - Exception: \n' + str(failure))
 			return
 
 	def sources(self, url, hostDict, hostprDict):
@@ -68,20 +73,20 @@ class source:
 		
 		sources = []
 		
-		
-		# they use a peculiar full-word url scheme
+		# they use a peculiar full-word url scheme for tv eps query
+		# also prepare here a by-date scheme query
 		if 'tvshowtitle' in url: 
-			request  = '%s season %s episode %s' % (url['tvshowtitle'], int(url['season']), int(url['episode']))
 			request2 = '%s %s' % (url['tvshowtitle'], re.sub('\D+','-',url['premiered']))
-			request2 = re.sub('\W+','-',request2) 
-			request2 = self.base_link + self.search_link % request2
-		else: 
-			request = '%s %s' % (url['title'], url['year'])
+			request2 = self.base_link + self.search_link % re.sub('\W+','-',request2)
+			log_utils.log('*** request2: %s' % request2)
 			
-		request = re.sub('\W+','-',request) 
-		request = self.base_link + self.search_link % request
-		#log_utils.log('***  request: %s' % request)
-		#log_utils.log('*** request2: %s' % request2)
+			request	 = '%s season %s episode %s' % (url['tvshowtitle'], int(url['season']), int(url['episode']))
+		else: 
+			request = '%s %s' % (url['title'], url['year'])	
+		
+		request = self.base_link + self.search_link % re.sub('\W+','-',request)
+		log_utils.log('***	request: %s' % request)
+
 		
 		# pull html but if ep got a 404, try ep by premiere date
 		html = client.request(request) 
@@ -110,6 +115,7 @@ class source:
 			# filenames (with useful info) seem predictably located
 			try: fn = re.match('(.+?)</strong>',sect).group(1)
 			except: fn = ''
+			log_utils.log('*** fn: %s' % fn)
 			
 			# sections under filenames usually have sizes (for tv at least)
 			try: 
@@ -124,7 +130,7 @@ class source:
 				quality, info = source_utils.get_release_quality(url,fn)
 				info.append(size)
 				info = ' | '.join(info)
-				#log_utils.log(' ** (%s %s) url=%s' % (quality,info,url)) 
+				log_utils.log(' ** (%s %s) url=%s' % (quality,info,url)) #~~~~~~~~~~~
 
 				url = url.encode('utf-8')
 				hostDict = hostDict + hostprDict
@@ -132,9 +138,9 @@ class source:
 				valid, host = source_utils.is_host_valid(url, hostDict)
 				if not valid: continue
 				
-				#log_utils.log(' ** VALID! (host=%s)' % host)
-				sources.append({'source': host, 'quality': quality, 'language': 'en', 'url': url,
-								'info': info, 'direct': False, 'debridonly': False})
+				log_utils.log(' ** VALID! (host=%s)' % host) #~~~~~~~~~~~~~~~
+				#sources.append({'source': host, 'quality': quality, 'language': 'en', 'url': url,
+				#				'info': info, 'direct': False, 'debridonly': False})
 
 		return sources
 
