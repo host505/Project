@@ -18,85 +18,135 @@ from resources.lib.modules import cleantitle
 from resources.lib.modules import client
 from resources.lib.modules import source_utils
 from resources.lib.modules import dom_parser
+from resources.lib.modules import log_utils
+
+# Working: https://seriesfree.to/episode/dawsons_creek_s6_e23.html
 
 class source:
-    def __init__(self):
-        self.priority = 1
-        self.language = ['en']
-        self.domains = ['watchseriesfree.to','seriesfree.to']
-        self.base_link = 'https://seriesfree.to/'
-        self.search_link = 'https://seriesfree.to/search/%s'
+	def __init__(self):
+		self.priority = 1
+		self.language = ['en']
+		self.domains = ['watchseriesfree.to','seriesfree.to']
+		self.base_link = 'https://seriesfree.to/'
+		self.search_link = 'https://seriesfree.to/search/%s'
+		self.ep_link = 'https://seriesfree.to/episode/%s.html'
 
-    def tvshow(self, imdb, tvdb, tvshowtitle, localtvshowtitle, aliases, year):
-        try:
-            query = self.search_link % urllib.quote_plus(cleantitle.query(tvshowtitle))
-            result = client.request(query)
-            t = [tvshowtitle] + source_utils.aliases_to_array(aliases)
-            t = [cleantitle.get(i) for i in set(t) if i]
-            result = re.compile('itemprop="url"\s+href="([^"]+).*?itemprop="name"\s+class="serie-title">([^<]+)', re.DOTALL).findall(result)
-            for i in result:
-                if cleantitle.get(cleantitle.normalize(i[1])) in t and year in i[1]: url = i[0]
-
-            url = url.encode('utf-8')
-            return url
-        except:
-            return
+	def tvshow(self, imdb, tvdb, tvshowtitle, localtvshowtitle, aliases, year):
+		try:
+			url = {'imdb': imdb, 'tvdb': tvdb, 'tvshowtitle': tvshowtitle, 'year': year}
+			url = urllib.urlencode(url)
+			log_utils.log('tvshow url: %s' % url)
+			return url
+		except:
+			failure = traceback.format_exc()
+			log_utils.log('WATCHSERIES - Exception: \n' + str(failure))
+			return
 
 
-    def episode(self, url, imdb, tvdb, title, premiered, season, episode):
-        try:
-            if url == None: return
-
-            url = urlparse.urljoin(self.base_link, url)
-            result = client.request(url)
-
-            title = cleantitle.get(title)
-            premiered = re.compile('(\d{4})-(\d{2})-(\d{2})').findall(premiered)[0]
-            premiered = '%s/%s/%s' % (premiered[2], premiered[1], premiered[0])
-            items = dom_parser.parse_dom(result, 'a', attrs={'itemprop':'url'})
-
-            url = [i.attrs['href'] for i in items if bool(re.compile('<span\s*>%s<.*?itemprop="episodeNumber">%s<\/span>' % (season,episode)).search(i.content))][0]
-            
-            url = url.encode('utf-8')
-            return url
-        except:
-            return
+	def episode(self, url, imdb, tvdb, title, premiered, season, episode):
+		try:
+			if url == None: return
+			log_utils.log('ep url0: %s' % url)
+			url = urlparse.parse_qs(url)
+			url = dict([(i, url[i][0]) if url[i] else (i, '') for i in url])
+			url['title'], url['premiered'], url['season'], url['episode'] = title, premiered, season, episode
+			url = urllib.urlencode(url)
+			log_utils.log('ep url: %s' % url)
+			return url
+		except:
+			failure = traceback.format_exc()
+			log_utils.log('WATCHSERIES - Exception: \n' + str(failure))
+			return
 
 
-    def sources(self, url, hostDict, hostprDict):
-        try:
-            sources = []
+	def sources(self, url, hostDict, hostprDict):
+		# {'season': '2', 'episode': '2', 'premiered': '2007-07-20', 'title': 'Sixty Five Million Years Off'}
+		# self.base_link = 'https://seriesfree.to/'
+		# self.ep_link	 = 'https://seriesfree.to/episode/%s.html'
+		#					https://seriesfree.to/episode/psych_s2_e2.html		
+		try:
+			sources = []
+			if url == None: return sources
 
-            if url == None: return sources
-            url = urlparse.urljoin(self.base_link, url)
-            for i in range(3):
-                result = client.request(url, timeout=10)
-                if not result == None: break
-            
-            dom = dom_parser.parse_dom(result, 'div', attrs={'class':'links', 'id': 'noSubs'})
-            result = dom[0].content
-            
-            links = re.compile('<tr\s*>\s*<td><i\s+class="fa fa-youtube link-logo"></i>([^<]+).*?href="([^"]+)"\s+class="watch',re.DOTALL).findall(result)         
-            for link in links[:5]:
-                try:
-                    url2 = urlparse.urljoin(self.base_link, link[1])
-                    for i in range(2):
-                        result2 = client.request(url2, timeout=3)
-                        if not result2 == None: break                    
-                    r = re.compile('href="([^"]+)"\s+class="action-btn').findall(result2)[0]
-                    valid, hoster = source_utils.is_host_valid(r, hostDict)
-                    if not valid: continue
-                    urls, host, direct = source_utils.check_directstreams(r, hoster)
-                    for x in urls: sources.append({'source': host, 'quality': x['quality'], 'language': 'en', 'url': x['url'], 'direct': direct, 'debridonly': False})
-                    
-                except:
-                    pass           
-                    
-            return sources
-        except:
-            return sources
+			data = urlparse.parse_qs(url)		  
+			data = dict([(i, data[i][0]) if data[i] else (i, '') for i in data])   
+			
+			log_utils.log('\n\n\n\n****************') ########
+			log_utils.log(data) ########
 
 
-    def resolve(self, url):
-        return url
+					
+					
+			req	= '%s s%s e%s' % (data['tvshowtitle'], int(data['season']), int(data['episode']))
+			req = req.replace('\'','').lower()
+			req = self.ep_link % re.sub('\W+','_',req)
+			
+			log_utils.log('req = %s' % req) ########
+					
+			for i in range(3):
+				result = client.request(req, timeout=10)
+				if not result == None: break
+				
+			dom = dom_parser.parse_dom(result, 'div', attrs={'class':'links', 'id': 'noSubs'})
+			result = dom[0].content		
+			# log_utils.log(result) ########
+			
+			links = re.compile('<i class="fa fa-youtube link-logo"></i>([^<]+).*?href="([^"]+)"\s+class="watch',re.DOTALL).findall(result)
+			#log_utils.log(links) ########
+			for x in links:
+				log_utils.log('* link: %s' % str(x))
+			# [(u'openload ', u'/open/cale/326a7eb-27075446a48a79bd5e96f34e1dd88cec.html'), 
+			#  (u'vidzi.online ', u'/open/cale/326a7ed-4fc571e177cd215fc065d0aa5436c61d.html'), 
+			#  (u'vidup.me ', u'/open/cale/326a7f0-38f2f2555d60863da82086cdde29ddea.html') ]
+			
+			
+			hostDict = hostDict + hostprDict
+			
+			conns = 0
+			for pair in links:
+				if conns > 16: break	 # n sources could potentially cost n*range connections!!! 
+				
+				host = pair[0].strip()	  
+				link = pair[1]
+				
+				valid, host = source_utils.is_host_valid(host, hostDict)
+				log_utils.log("\n\n** conn #%s: %s (%s) %s" % (conns,host,valid,link)) #######
+				if not valid: continue
+				
+				link = urlparse.urljoin(self.base_link, link)
+				for i in range(2):
+					result = client.request(link, timeout=3)
+					conns += 1
+					if not result == None: break	 
+				
+				try:
+					link = re.compile('href="([^"]+)"\s+class="action-btn').findall(result)[0]
+				except: 
+					log_utils.log(' ** failed to findall on result **')
+					continue
+					
+				try:
+					u_q, host, direct = source_utils.check_directstreams(link, host)
+				except:
+					log_utils.log('FAILED DS CHECK ~~~~~~~~~~~~~~')
+					continue
+					
+				link, quality = u_q[0]['url'], u_q[0]['quality']
+				log_utils.log('    checked host: %s' % host)
+				log_utils.log('    checked direct: %s' % direct)
+				log_utils.log('    quality, link: %s, %s' % (quality,link))
+				log_utils.log('    # of urls: %s' % len(u_q))
+
+				
+				sources.append({'source': host, 'quality': quality, 'language': 'en', 'url': link, 'direct': direct, 'debridonly': False})
+					
+			return sources
+		except:
+			failure = traceback.format_exc()
+			log_utils.log('WATCHSERIES - Exception: \n' + str(failure))
+			return sources
+
+
+	def resolve(self, url):
+		return url
 
