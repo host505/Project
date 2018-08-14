@@ -12,7 +12,7 @@
 # Addon id: plugin.video.placenta
 # Addon Provider: Mr.Blamo
 
-import re,urllib,urlparse,json,base64
+import re,urllib,urlparse,json,base64, random
 
 from resources.lib.modules import cleantitle
 from resources.lib.modules import client
@@ -30,6 +30,8 @@ class source:
 		self.base_link = 'https://seriesfree.to/'
 		self.search_link = 'https://seriesfree.to/search/%s'
 		self.ep_link = 'https://seriesfree.to/episode/%s.html'
+		self.max_conns = 10 #set to 10 bc that = how many the prev scraper might hit
+		self.min_srcs = 3
 
 	def tvshow(self, imdb, tvdb, tvshowtitle, localtvshowtitle, aliases, year):
 		try:
@@ -82,9 +84,13 @@ class source:
 				
 			# get the key div's contents
 			# then get all the links along with preceding text hinting at host
+			# ep pages sort links by hoster which is bad if the top hosters
+			#   are unavailable for debrid OR if they're ONLY avail for debrid
+			#   (for non-debrid peeps) so shuffle the list
 			dom = dom_parser.parse_dom(result, 'div', attrs={'class':'links', 'id': 'noSubs'})
 			result = dom[0].content		
 			links = re.compile('<i class="fa fa-youtube link-logo"></i>([^<]+).*?href="([^"]+)"\s+class="watch',re.DOTALL).findall(result)
+			random.shuffle(links)
 
 
 			
@@ -94,8 +100,11 @@ class source:
 			
 			conns = 0 
 			for pair in links:
-				if conns > 16: break	 # n sources could potentially cost n*range connections!!! 
-				
+			
+				# try to be a little polite, and limit connections 
+				#  (unless we're not getting sources)
+				if conns > self.max_conns and len(sources) > self.min_srcs: break	 
+
 				
 				# the 2 groups from the link search = hoster name, episode page url
 				host = pair[0].strip()	  
@@ -109,6 +118,7 @@ class source:
 				
 				
 				# two attempts per source link, then bail
+				# NB: n sources could potentially cost n*range connections!!! 
 				link = urlparse.urljoin(self.base_link, link)
 				for i in range(2):
 					result = client.request(link, timeout=3)
@@ -129,7 +139,7 @@ class source:
 				try:
 					u_q, host, direct = source_utils.check_directstreams(link, host)
 				except:
-					#log_utils.log('FAILED DS CHECK ~~~~~~~~~~~~~~') #######
+					#log_utils.log('FAILED DS CHECK ~~~~~~~~~~~~~~') ####### 
 					continue
 					
 				# check_directstreams strangely returns a list instead of a single 2-tuple
@@ -151,4 +161,3 @@ class source:
 
 	def resolve(self, url):
 		return url
-
