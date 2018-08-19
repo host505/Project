@@ -340,7 +340,7 @@ This is a Non-profit resource, organized solely for educational purposes which i
 	</extension>
 </addon>
 
-<addon id="plugin.video.chocolatesaltyballs" name="[COLORorange]Chocolate Salty Balls[/COLOR]" version="9.8" provider-name="[COLORlimegreen]Team Deez Nutz[/COLOR]">
+<addon id="plugin.video.chocolatesaltyballs" name="[COLORorange]Chocolate Salty Balls[/COLOR]" version="9.9" provider-name="[COLORlimegreen]Team Deez Nutz[/COLOR]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" />
