@@ -34,59 +34,137 @@ class source:
 		self.min_srcs = 3
 
 	def tvshow(self, imdb, tvdb, tvshowtitle, localtvshowtitle, aliases, year):
+		log_utils.log('\n\n~~~ inside tvshow()')
+
 		try:
-			url = {'imdb': imdb, 'tvdb': tvdb, 'tvshowtitle': tvshowtitle, 'year': year}
-			url = urllib.urlencode(url)
-			log_utils.log('tvshow url: %s' % url)
+			
+			query = self.search_link % urllib.quote_plus(cleantitle.query(tvshowtitle))
+			#result = client.request(query)
+			
+			for i in range(3):
+				result = client.request(query, timeout=3)
+				if not result == None: break
+			
+			
+			
+			t = [tvshowtitle] + source_utils.aliases_to_array(aliases)
+			t = [cleantitle.get(i) for i in set(t) if i]
+			result = re.compile('itemprop="url"\s+href="([^"]+).*?itemprop="name"\s+class="serie-title">([^<]+)', re.DOTALL).findall(result)
+			for i in result:
+				if cleantitle.get(cleantitle.normalize(i[1])) in t and year in i[1]: url = i[0]
+
+			url = url.encode('utf-8')
+			
+			url = {'show_url': url,'show_title': tvshowtitle}
+			
+			log_utils.log('\n\n~~~ outgoing tvshow() url')
+			log_utils.log(url)
+			
 			return url
 		except:
-			failure = traceback.format_exc()
-			log_utils.log('WATCHSERIES - Exception: \n' + str(failure))
 			return
 
 
 	def episode(self, url, imdb, tvdb, title, premiered, season, episode):
+		log_utils.log('\n\n~~~ inside episode()')
+
 		try:
+		
 			if url == None: return
-			url = urlparse.parse_qs(url)
-			url = dict([(i, url[i][0]) if url[i] else (i, '') for i in url])
-			url['title'], url['premiered'], url['season'], url['episode'] = title, premiered, season, episode
-			url = urllib.urlencode(url)
+			
+			tvshowtitle = url['show_title']
+			url = url['show_url']
+
+
+			log_utils.log('\n\n~~~ tvshowtitle: %s' % tvshowtitle)
+			log_utils.log('\n\n~~~ incomingish episode() url')
+			log_utils.log(url)
+
+			url = urlparse.urljoin(self.base_link, url)
+			log_utils.log('\n\n~~~ baselink-joined url')
+			log_utils.log(url)
+			
+			# this should probably get multiple passes like the first request in sources()
+			#result = client.request(url)
+			
+			for i in range(3):
+				result = client.request(url, timeout=3)
+				if not result == None: break
+			
+				
+			title = cleantitle.get(title)
+
+			
+			# assume seriesfree has YYYY-MM-DD listed in ep index
+			#  (this appears to not always be the case though)
+			premiered = re.compile('(\d{4})-(\d{2})-(\d{2})').findall(premiered)[0]
+			premiered = '%s/%s/%s' % (premiered[2], premiered[1], premiered[0])
+			items = dom_parser.parse_dom(result, 'a', attrs={'itemprop':'url'})
+
+			url = [i.attrs['href'] for i in items if bool(re.compile('<span\s*>%s<.*?itemprop="episodeNumber">%s<\/span>' % (season,episode)).search(i.content))][0]
+			
+			# if no url, just compile the expected show_s#_e#
+			# url = '%s_s%s_e%s' % (title, int(season), int(episode))
+			# url = urlparse.urljoin(self.ep_link, url)
+			# outgoing episode url format: /episode/x_files_s4_e10.html		
+			
+			url = url.encode('utf-8')
+			
+			url = {'show_title': tvshowtitle, 'ep_url': url, 's': season, 'e': episode}
+			
+			log_utils.log('\n\n~~~ outgoing episode() url')
+			log_utils.log(url)
+			
 			return url
 		except:
-			failure = traceback.format_exc()
-			log_utils.log('WATCHSERIES - Exception: \n' + str(failure))
 			return
 
 
 	def sources(self, url, hostDict, hostprDict):
+	
+		log_utils.log('\n\n~~~ incoming sources() url')
+		log_utils.log(url)
+	
 		try:
 			sources = []
 			if url == None: return sources
 
-			data = urlparse.parse_qs(url)		  
-			data = dict([(i, data[i][0]) if data[i] else (i, '') for i in data])   
+			tvshowtitle = url['show_title']
+			season = url['s']
+			episode = url['e']
+			url = url['ep_url']
+			
+			
+			#url = {'show_title': tvshowtitle, 'ep_url': url, 's': season, 'e': episode}
+			req = urlparse.urljoin(self.base_link, url)
+			
+			log_utils.log('\n\n~~~ sources() pre-request req url')
+			log_utils.log(req)
+			
+			
+#			data = urlparse.parse_qs(url)		  
+#			data = dict([(i, data[i][0]) if data[i] else (i, '') for i in data])   
 			
 			
 			# compile the query part of the episode-page url
 			# keep only normal characters and use underscores for etc
-			req	= '%s s%s e%s' % (data['tvshowtitle'], int(data['season']), int(data['episode']))
-			req = req.replace('\'','').lower()
-			req = self.ep_link % re.sub('\W+','_',req)
+#			req	= '%s s%s e%s' % (data['tvshowtitle'], int(data['season']), int(data['episode']))
+#			req = req.replace('\'','').lower()
+#			req = self.ep_link % re.sub('\W+','_',req)
 			#log_utils.log('req = %s' % req) ########
 					
 			
 			# three attempts to pull up the episode-page, then bail
 			for i in range(3):
-				result = client.request(req, timeout=10)
+				result = client.request(req, timeout=3)
 				if not result == None: break
 				
 				
 			# get the key div's contents
 			# then get all the links along with preceding text hinting at host
 			# ep pages sort links by hoster which is bad if the top hosters
-			#   are unavailable for debrid OR if they're ONLY avail for debrid
-			#   (for non-debrid peeps) so shuffle the list
+			#	are unavailable for debrid OR if they're ONLY avail for debrid
+			#	(for non-debrid peeps) so shuffle the list
 			dom = dom_parser.parse_dom(result, 'div', attrs={'class':'links', 'id': 'noSubs'})
 			result = dom[0].content		
 			links = re.compile('<i class="fa fa-youtube link-logo"></i>([^<]+).*?href="([^"]+)"\s+class="watch',re.DOTALL).findall(result)
@@ -144,10 +222,10 @@ class source:
 					
 				# check_directstreams strangely returns a list instead of a single 2-tuple
 				link, quality = u_q[0]['url'], u_q[0]['quality']
-				#log_utils.log('    checked host: %s' % host)
-				#log_utils.log('    checked direct: %s' % direct)
-				#log_utils.log('    quality, link: %s, %s' % (quality,link))
-				#log_utils.log('    # of urls: %s' % len(u_q))
+				#log_utils.log('	checked host: %s' % host)
+				#log_utils.log('	checked direct: %s' % direct)
+				#log_utils.log('	quality, link: %s, %s' % (quality,link))
+				#log_utils.log('	# of urls: %s' % len(u_q))
 
 				
 				sources.append({'source': host, 'quality': quality, 'language': 'en', 'url': link, 'direct': direct, 'debridonly': False})
