@@ -14,6 +14,7 @@
 		<provides>video</provides>
         <provides>audio</provides>
 	</extension>
+	<extension point="xbmc.service" library="service.py" start="startup" />
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">Placenta</summary>
 		<description>Covenant Fork from Echo/Colossus era with Team Afterbirth's updates and new code.</description>
