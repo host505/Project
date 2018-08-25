@@ -30,7 +30,6 @@ class source:
         self.user_pass = control.setting('furk.user_pass')
         self.api_key = control.setting('furk.api')
         self.search_limit = control.setting('furk.limit')
-        self.mod_level = control.setting('furk.mod.level').lower()
 
     def get_api(self):
 
@@ -95,28 +94,28 @@ class source:
         try:
 
             content_type = 'episode' if 'tvshowtitle' in url else 'movie'
-            match = 'all'
-            moderated = 'no' if content_type == 'episode' else self.mod_level
+            match = 'extended'
+            moderated = 'no' if content_type == 'episode' else 'yes'
             search_in = ''
 
             if content_type == 'movie':
                 title = url['title'].replace(':', ' ').replace(' ', '+').replace('&', 'and')
                 title = title.replace("'", "")
                 year = url['year']
-                link = '{0}+{1}'.format(title, year)
+                link = '@name+%s+%s+@files+%s+%s' \
+                        % (title, year, title, year)
 
             elif content_type == 'episode':
                 title = url['tvshowtitle'].replace(':', ' ').replace(' ', '+').replace('&', 'and')
                 season = int(url['season'])
                 episode = int(url['episode'])
-                season00 = 's%02d' % (season)
                 season00_ep00_SE = 's%02de%02d' % (season, episode)
                 season0_ep0_SE = 's%de%d' % (season, episode)
                 season00_ep00_X = '%02dx%02d' % (season, episode)
                 season0_ep0_X = '%dx%d' % (season, episode)
                 season0_ep00_X = '%dx%02d' % (season, episode)
-                link = '%s+%s' \
-                       % (title, season00_ep00_SE)
+                link = '@name+%s+@files+%s+|+%s+|+%s+|+%s+|+%s' \
+                        % (title, season00_ep00_SE, season0_ep0_SE, season00_ep00_X, season0_ep0_X, season0_ep00_X)
 
             s = requests.Session()
             link = (
