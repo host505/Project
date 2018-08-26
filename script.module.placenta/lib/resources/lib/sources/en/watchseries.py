@@ -52,8 +52,8 @@ class source:
 
 			url = url.encode('utf-8')
 			
-			log_utils.log('\n\n~~~ outgoing tvshow() url')
-			log_utils.log(url)
+			#log_utils.log('\n\n~~~ outgoing tvshow() url')
+			#log_utils.log(url)
 			
 			# returned 'url' format like: /serie/x_files 
 			return url
@@ -64,12 +64,12 @@ class source:
 	def episode(self, url, imdb, tvdb, title, premiered, season, episode):
 		try:
 			if url == None: return
-			log_utils.log('\n\n~~~ incomingish episode() url')
-			log_utils.log(url)
+			#log_utils.log('\n\n~~~ incomingish episode() url')
+			#log_utils.log(url)
 
 			url = urlparse.urljoin(self.base_link, url)
-			log_utils.log('\n\n~~~ baselink-joined url')
-			log_utils.log(url)
+			#log_utils.log('\n\n~~~ baselink-joined url')
+			#log_utils.log(url)
 			
 			
 			# req page 3 times to workaround their BS random 404's
@@ -101,7 +101,7 @@ class source:
 			# firstly, try to match YYYY-MM-DD listed in ep listing
 			#  (this should (?) be more reliable than season/ep)
 			try:	
-				log_utils.log('\n\n~~~ Attempting: find ep by air-date')
+				#log_utils.log('\n\n~~~ Attempting: find ep by air-date')
 				
 				# iterate through all 'a', from 'items' above...
 				# grab all links that contain matching season/ep...
@@ -114,7 +114,7 @@ class source:
 			
 			# if no url match by date, continue to try by season/ep#
 			if url == None:
-				log_utils.log('\n\n~~~ Attempting: (url==None) match by season/ep')
+				#log_utils.log('\n\n~~~ Attempting: (url==None) match by season/ep')
 			
 				# iterate through all 'a', from 'items' above...
 				# grab all links that contain matching season/ep...
@@ -123,8 +123,8 @@ class source:
 			
 			
 			url = url.encode('utf-8')
-			log_utils.log('\n\n~~~ outgoing episode() url')
-			log_utils.log(url)
+			#log_utils.log('\n\n~~~ outgoing episode() url')
+			#log_utils.log(url)
 			
 			# returned 'url' format like: /episode/x_files_s4_e1.html
 			return url
@@ -134,8 +134,8 @@ class source:
 
 	def sources(self, url, hostDict, hostprDict):
 	
-		log_utils.log('\n\n~~~ incoming sources() url')
-		log_utils.log(url)
+		#log_utils.log('\n\n~~~ incoming sources() url')
+		#log_utils.log(url)
 	
 		try:
 			sources = []
