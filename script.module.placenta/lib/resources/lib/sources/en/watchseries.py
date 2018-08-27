@@ -18,6 +18,7 @@ from resources.lib.modules import cleantitle
 from resources.lib.modules import client
 from resources.lib.modules import source_utils
 from resources.lib.modules import dom_parser
+from resources.lib.modules import debrid
 from resources.lib.modules import log_utils
 
 # Working: https://seriesfree.to/episode/dawsons_creek_s6_e23.html
@@ -29,71 +30,147 @@ class source:
 		self.domains = ['watchseriesfree.to','seriesfree.to']
 		self.base_link = 'https://seriesfree.to/'
 		self.search_link = 'https://seriesfree.to/search/%s'
-		self.ep_link = 'https://seriesfree.to/episode/%s.html'
 		self.max_conns = 10 #set to 10 bc that = how many the prev scraper might hit
 		self.min_srcs = 3
 
 	def tvshow(self, imdb, tvdb, tvshowtitle, localtvshowtitle, aliases, year):
 		try:
-			url = {'imdb': imdb, 'tvdb': tvdb, 'tvshowtitle': tvshowtitle, 'year': year}
-			url = urllib.urlencode(url)
-			log_utils.log('tvshow url: %s' % url)
+			query = self.search_link % urllib.quote_plus(cleantitle.query(tvshowtitle))
+
+			# req page 3 times to workaround their BS random 404's
+			# responses (legit & BS 404s) are actually very fast: timeout prob not important
+			for i in range(4):
+				result = client.request(query, timeout=3)
+				if not result == None: break
+			
+
+			t = [tvshowtitle] + source_utils.aliases_to_array(aliases)
+			t = [cleantitle.get(i) for i in set(t) if i]
+			result = re.compile('itemprop="url"\s+href="([^"]+).*?itemprop="name"\s+class="serie-title">([^<]+)', re.DOTALL).findall(result)
+			for i in result:
+				if cleantitle.get(cleantitle.normalize(i[1])) in t and year in i[1]: url = i[0]
+
+			url = url.encode('utf-8')
+			
+			#log_utils.log('\n\n~~~ outgoing tvshow() url')
+			#log_utils.log(url)
+			
+			# returned 'url' format like: /serie/x_files 
 			return url
 		except:
-			failure = traceback.format_exc()
-			log_utils.log('WATCHSERIES - Exception: \n' + str(failure))
 			return
 
 
 	def episode(self, url, imdb, tvdb, title, premiered, season, episode):
 		try:
 			if url == None: return
-			url = urlparse.parse_qs(url)
-			url = dict([(i, url[i][0]) if url[i] else (i, '') for i in url])
-			url['title'], url['premiered'], url['season'], url['episode'] = title, premiered, season, episode
-			url = urllib.urlencode(url)
+			#log_utils.log('\n\n~~~ incomingish episode() url')
+			#log_utils.log(url)
+
+			url = urlparse.urljoin(self.base_link, url)
+			#log_utils.log('\n\n~~~ baselink-joined url')
+			#log_utils.log(url)
+			
+			
+			# req page 3 times to workaround their BS random 404's
+			# responses (legit & BS both) are actually very fast: timeout not that important
+			for i in range(4):
+				result = client.request(url, timeout=3)
+				if not result == None: break
+			
+				
+
+			# grab all 'a' that are staged with ep-links formating
+			items = dom_parser.parse_dom(result, 'a', attrs={'itemprop':'url'})
+			#
+			## <a itemprop="url" href="/episode/the_middle_s9_e16.html" title="Watch The Middle Season 9 Episode 16 Online For Free">
+			##  <span class="sinfo fl-l">
+			##   <span><span>9</span>
+			##   </span>×<span itemprop="episodeNumber">16</span>
+			##  </span>
+			##  <em class="date fl-r" itemprop="datePublished">2018-03-13</em>
+			##  <span class="txt-ell" title="Watch The Middle Season 9 Episode 16 Online For Free">
+			##   <span class="W title txt-ell ">
+			##    <span><span>The Middle</span></span>
+			##    <em> - <span itemprop="name">The Crying Game</span></em>
+			##   </span>
+			##  </span></a>
+			#
+			
+			
+			# firstly, try to match YYYY-MM-DD listed in ep listing
+			#  (this should (?) be more reliable than season/ep)
+			try:	
+				#log_utils.log('\n\n~~~ Attempting: find ep by air-date')
+				
+				# iterate through all 'a', from 'items' above...
+				# grab all links that contain matching season/ep...
+				# assign the first one's href to url
+				url = [i.attrs['href'] for i in items if bool(re.compile('"datePublished">%s' % premiered).search(i.content))][0]
+			except:
+				url = None
+				pass  
+			
+			
+			# if no url match by date, continue to try by season/ep#
+			if url == None:
+				#log_utils.log('\n\n~~~ Attempting: (url==None) match by season/ep')
+			
+				# iterate through all 'a', from 'items' above...
+				# grab all links that contain matching season/ep...
+				# assign the first one's href to url
+				url = [i.attrs['href'] for i in items if bool(re.compile('<span\s*>%s<.*?itemprop="episodeNumber">%s<\/span>' % (season,episode)).search(i.content))][0]
+			
+			
+			url = url.encode('utf-8')
+			#log_utils.log('\n\n~~~ outgoing episode() url')
+			#log_utils.log(url)
+			
+			# returned 'url' format like: /episode/x_files_s4_e1.html
 			return url
 		except:
-			failure = traceback.format_exc()
-			log_utils.log('WATCHSERIES - Exception: \n' + str(failure))
 			return
 
 
 	def sources(self, url, hostDict, hostprDict):
+	
+		#log_utils.log('\n\n~~~ incoming sources() url')
+		#log_utils.log(url)
+	
 		try:
 			sources = []
 			if url == None: return sources
 
-			data = urlparse.parse_qs(url)		  
-			data = dict([(i, data[i][0]) if data[i] else (i, '') for i in data])   
-			
-			
-			# compile the query part of the episode-page url
-			# keep only normal characters and use underscores for etc
-			req	= '%s s%s e%s' % (data['tvshowtitle'], int(data['season']), int(data['episode']))
-			req = req.replace('\'','').lower()
-			req = self.ep_link % re.sub('\W+','_',req)
-			#log_utils.log('req = %s' % req) ########
-					
+			req = urlparse.urljoin(self.base_link, url)
 			
 			# three attempts to pull up the episode-page, then bail
-			for i in range(3):
-				result = client.request(req, timeout=10)
+			for i in range(4):
+				result = client.request(req, timeout=3)
 				if not result == None: break
 				
 				
 			# get the key div's contents
 			# then get all the links along with preceding text hinting at host
 			# ep pages sort links by hoster which is bad if the top hosters
-			#   are unavailable for debrid OR if they're ONLY avail for debrid
-			#   (for non-debrid peeps) so shuffle the list
+			#	are unavailable for debrid OR if they're ONLY avail for debrid
+			#	(for non-debrid peeps) so shuffle the list
 			dom = dom_parser.parse_dom(result, 'div', attrs={'class':'links', 'id': 'noSubs'})
 			result = dom[0].content		
 			links = re.compile('<i class="fa fa-youtube link-logo"></i>([^<]+).*?href="([^"]+)"\s+class="watch',re.DOTALL).findall(result)
 			random.shuffle(links)
-
-
 			
+			
+			# Here we stack the deck for debrid users by copying
+			#  all debrid hosts to the top of the list
+			# This is ugly but it works. Someone else please make it cleaner?
+			if debrid.status() == True:
+				debrid_links = []
+				for pair in links:
+					for r in debrid.debrid_resolvers:
+						if r.valid_url('', pair[0].strip()): debrid_links.append(pair)
+				links = debrid_links + links
+
+
 			# master list of hosts ResolveURL and placenta itself can resolve
 			# we'll check against this list to not waste connections on unsupported hosts
 			hostDict = hostDict + hostprDict
@@ -130,7 +207,6 @@ class source:
 				try:
 					link = re.compile('href="([^"]+)"\s+class="action-btn').findall(result)[0]
 				except: 
-					#log_utils.log(' ** failed to findall on result **') #######
 					continue
 					
 					
@@ -139,15 +215,14 @@ class source:
 				try:
 					u_q, host, direct = source_utils.check_directstreams(link, host)
 				except:
-					#log_utils.log('FAILED DS CHECK ~~~~~~~~~~~~~~') ####### 
 					continue
 					
 				# check_directstreams strangely returns a list instead of a single 2-tuple
 				link, quality = u_q[0]['url'], u_q[0]['quality']
-				#log_utils.log('    checked host: %s' % host)
-				#log_utils.log('    checked direct: %s' % direct)
-				#log_utils.log('    quality, link: %s, %s' % (quality,link))
-				#log_utils.log('    # of urls: %s' % len(u_q))
+				#log_utils.log('	checked host: %s' % host)
+				#log_utils.log('	checked direct: %s' % direct)
+				#log_utils.log('	quality, link: %s, %s' % (quality,link))
+				#log_utils.log('	# of urls: %s' % len(u_q))
 
 				
 				sources.append({'source': host, 'quality': quality, 'language': 'en', 'url': link, 'direct': direct, 'debridonly': False})
