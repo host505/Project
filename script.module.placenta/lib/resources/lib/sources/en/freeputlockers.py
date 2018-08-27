@@ -23,9 +23,9 @@ class source:
     def __init__(self):
         self.priority = 1
         self.language = ['en']
-        self.domains = ['vioozfree.net']
-        self.base_link = 'http://vioozfree.net'
-        self.search_link = '/watch/%s-%s-online-viooz.html'
+        self.domains = ['freeputlockers.org']
+        self.base_link = 'http://freeputlockers.org'
+        self.search_link = '/watch/%s-%s-online-putlockers.html' 
         
     def movie(self, imdb, title, localtitle, aliases, year):
         try:
@@ -88,15 +88,15 @@ class source:
             urldata = urlparse.parse_qs(url)
             urldata = dict((i, urldata[i][0]) for i in urldata)
             post = {'ipplugins': 1,'ip_film': urldata['data-film'], 'ip_server': urldata['data-server'], 'ip_name': urldata['data-name'],'fix': "0"}
-            p1 = client.request('http://vioozfree.net/ip.file/swf/plugins/ipplugins.php', post=post, referer=urldata['url'], XHR=True)
+            p1 = client.request('http://freeputlockers.org/ip.file/swf/plugins/ipplugins.php', post=post, referer=urldata['url'], XHR=True)
             p1 = json.loads(p1)
-            p2 = client.request('http://vioozfree.net/ip.file/swf/ipplayer/ipplayer.php?u=%s&s=%s&n=0' %(p1['s'],urldata['data-server']))
+            p2 = client.request('http://freeputlockers.org/ip.file/swf/ipplayer/ipplayer.php?u=%s&s=%s&n=0' %(p1['s'],urldata['data-server']))
             p2 = json.loads(p2)
-            p3 = client.request('http://vioozfree.net/ip.file/swf/ipplayer/api.php?hash=%s' %(p2['hash']))
+            p3 = client.request('http://freeputlockers.org/ip.file/swf/ipplayer/api.php?hash=%s' %(p2['hash']))
             p3 = json.loads(p3)
             n = p3['status']
             if n == False:
-                p2 = client.request('http://vioozfree.net/ip.file/swf/ipplayer/ipplayer.php?u=%s&s=%s&n=1' %(p1['s'],urldata['data-server']))
+                p2 = client.request('http://freeputlockers.org/ip.file/swf/ipplayer/ipplayer.php?u=%s&s=%s&n=1' %(p1['s'],urldata['data-server']))
                 p2 = json.loads(p2)
             url =  "https:%s" %p2["data"].replace("\/","/")
             return url

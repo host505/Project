@@ -26,11 +26,11 @@ class source:
     def __init__(self):
         self.priority = 1
         self.language = ['en']
-        self.domains = ['pubfilm.to']
-        self.base_link = 'http://www.pubfilms.tv/'
+        self.domains = ['pubfilm.to', 'pubfilms.tv']
+        self.base_link = 'http://pubfilm.is/'
 
-        self.tvsearch_link = '?c=movie&m=quickSearch&keyword=%s'
-        self.tvsearch_link_2 = '?c=movie&m=filter&keyword=%s'
+        self.tvsearch_link = '/?s=%s'
+        self.tvsearch_link_2 = '/?s=%s'
         
 
     def movie(self, imdb, title, localtitle, aliases, year):

@@ -23,10 +23,9 @@ class source:
     def __init__(self):
         self.priority = 1
         self.language = ['en']
-        self.domains = ['moviesonline.la']
-        self.base_link = 'http://www2.moviesonline.la/'
+        self.domains = ['hd.today']
+        self.base_link = 'http://www3.hd.today/'
         self.search_link = '/search-movies/%s.html'
-        self.scraper = cfscrape.create_scraper()
 
 
     def movie(self, imdb, title, localtitle, aliases, year):

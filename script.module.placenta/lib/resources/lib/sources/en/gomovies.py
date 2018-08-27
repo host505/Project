@@ -12,21 +12,21 @@
 # Addon id: plugin.video.placenta
 # Addon Provider: Mr.Blamo
 
-import re,traceback,urlparse,urllib,base64
+import re, urlparse, urllib, base64
 
 from resources.lib.modules import cleantitle
 from resources.lib.modules import client
 from resources.lib.modules import cache
 from resources.lib.modules import dom_parser2
+from resources.lib.modules import debrid
 
 class source:
     def __init__(self):
         self.priority = 1
         self.language = ['en']
-        self.domains = ['moviesonline.la']
-        self.base_link = 'http://www2.moviesonline.la/'
+        self.domains = ['gomovies.gs']
+        self.base_link = 'http://gomovies.gs'
         self.search_link = '/search-movies/%s.html'
-        self.scraper = cfscrape.create_scraper()
 
 
     def movie(self, imdb, title, localtitle, aliases, year):
@@ -100,7 +100,7 @@ class source:
                         'language': 'en',
                         'url': url.replace('\/', '/'),
                         'direct': False,
-                        'debridonly': False
+                        'debridonly': True
                     })
                 except:
                     pass
@@ -122,7 +122,7 @@ class source:
                             'language': 'en',
                             'url': url.replace('\/', '/'),
                             'direct': False,
-                            'debridonly': False
+                            'debridonly': True
                         })
                     except:
                         pass

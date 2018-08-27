@@ -12,19 +12,25 @@
 # Addon id: plugin.video.placenta
 # Addon Provider: Mr.Blamo
 
-import re,base64,urllib,urlparse,json
+import re
+import urllib
+import urlparse
+import json
+import base64
 
-from resources.lib.modules import client
-from resources.lib.modules import cleantitle
-from resources.lib.modules import directstream
-from resources.lib.modules import dom_parser2
+from resources.lib.modules import client, cleantitle, directstream, dom_parser2
+from resources.lib.modules import debrid
 
 class source:
     def __init__(self):
+        '''
+        Constructor defines instances variables
+
+        '''
         self.priority = 1
         self.language = ['en']
-        self.domains = ['xmovies8.fm']
-        self.base_link = 'http://www1.xmovies8.fm/'
+        self.domains = ['huluvip.net']
+        self.base_link = 'http://huluvip.net'
         self.movies_search_path = ('search-movies/%s.html')
 
     def movie(self, imdb, title, localtitle, aliases, year):
@@ -71,7 +77,7 @@ class source:
                             'language': 'en',
                             'url': i[0].replace('\/','/'),
                             'direct': False,
-                            'debridonly': False
+                            'debridonly': True
                         })
                 except: pass
             return sources

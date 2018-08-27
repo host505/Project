@@ -12,19 +12,20 @@
 # Addon id: plugin.video.placenta
 # Addon Provider: Mr.Blamo
 
-import re,urllib,urlparse,json,base64,time
+import re,traceback,urllib,urlparse,json,base64,time
 
 from resources.lib.modules import cleantitle
 from resources.lib.modules import dom_parser2
 from resources.lib.modules import client
+from resources.lib.modules import debrid
 
 class source:
     def __init__(self):
         self.priority = 1
         self.language = ['en']
-        self.domains = ['freeputlockers.org']
-        self.base_link = 'http://freeputlockers.org'
-        self.search_link = '/watch/%s-%s-online-putlockers.html' 
+        self.domains = ['flenix.org']
+        self.base_link = 'http://flenix.org'
+        self.search_link = '/watch/%s-%s-online-flenix.html'
         
     def movie(self, imdb, title, localtitle, aliases, year):
         try:
@@ -87,15 +88,15 @@ class source:
             urldata = urlparse.parse_qs(url)
             urldata = dict((i, urldata[i][0]) for i in urldata)
             post = {'ipplugins': 1,'ip_film': urldata['data-film'], 'ip_server': urldata['data-server'], 'ip_name': urldata['data-name'],'fix': "0"}
-            p1 = client.request('http://freeputlockers.org/ip.file/swf/plugins/ipplugins.php', post=post, referer=urldata['url'], XHR=True)
+            p1 = client.request('http://flenix.org/ip.file/swf/plugins/ipplugins.php', post=post, referer=urldata['url'], XHR=True)
             p1 = json.loads(p1)
-            p2 = client.request('http://freeputlockers.org/ip.file/swf/ipplayer/ipplayer.php?u=%s&s=%s&n=0' %(p1['s'],urldata['data-server']))
+            p2 = client.request('http://flenix.org/ip.file/swf/ipplayer/ipplayer.php?u=%s&s=%s&n=0' %(p1['s'],urldata['data-server']))
             p2 = json.loads(p2)
-            p3 = client.request('http://freeputlockers.org/ip.file/swf/ipplayer/api.php?hash=%s' %(p2['hash']))
+            p3 = client.request('http://flenix.org/ip.file/swf/ipplayer/api.php?hash=%s' %(p2['hash']))
             p3 = json.loads(p3)
             n = p3['status']
             if n == False:
-                p2 = client.request('http://freeputlockers.org/ip.file/swf/ipplayer/ipplayer.php?u=%s&s=%s&n=1' %(p1['s'],urldata['data-server']))
+                p2 = client.request('http://flenix.org/ip.file/swf/ipplayer/ipplayer.php?u=%s&s=%s&n=1' %(p1['s'],urldata['data-server']))
                 p2 = json.loads(p2)
             url =  "https:%s" %p2["data"].replace("\/","/")
             return url
