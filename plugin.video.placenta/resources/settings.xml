@@ -95,7 +95,7 @@
         <setting id="provider.bmoviez" type="bool" label="BMOVIEZ" default="true" />
         <setting id="provider.bnwmovies" type="bool" label="BNWMOVIES" default="true" />
         <setting id="provider.bob" type="bool" label="BOB" default="true" />
-        <setting id="provider.bobp" type="bool" label="BOBP" default="true" />
+        <setting id="provider.bobp" type="bool" label="BOBP" default="false" />
         <setting id="provider.cartoonhd" type="bool" label="CARTOONHD" default="true" />
         <setting id="provider.cinemamega" type="bool" label="CINEMAMEGA" default="true" />
         <setting id="provider.civi" type="bool" label="CIVI" default="true" />
@@ -103,6 +103,8 @@
         <setting id="provider.cmovie" type="bool" label="CUMOVIE" default="true" />
         <setting id="provider.coolmoviezone" type="bool" label="COOLMOVIEZONE" default="true" />
         <setting id="provider.cooltv" type="bool" label="COOLTV" default="true" />
+        <setting id="provider.deliverance" type="bool" label="DELIVERANCE" default="true" />
+        <setting id="provider.directdl" type="bool" label="DIRECTDL" default="true" />
         <setting id="provider.divxcrawler" type="bool" label="DIVXCRAWLER" default="true" />
         <setting id="provider.dltube" type="bool" label="DLTUBE" default="true" />
         <setting id="provider.filmfrantic" type="bool" label="FILMFRANTIC" default="true" />
