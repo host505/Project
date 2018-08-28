@@ -12,7 +12,7 @@ BUILDFILE      = 'https://raw.githubusercontent.com/MrBlamo420/wizard_files/mast
 # 0 being every startup of kodi
 UPDATECHECK    = 0
 # Text File with apk info in it.
-APKFILE        = 'https://raw.githubusercontent.com/MrBlamo420/wizard_files/master/kodifork.txt'
+APKFILE        = 'http://mrblamo.xyz/img/kodifork.txt'
 # Text File with Youtube Videos urls.  Leave as 'http://' to ignore
 YOUTUBETITLE   = ''
 YOUTUBEFILE    = 'http://'
