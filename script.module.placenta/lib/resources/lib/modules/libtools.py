@@ -117,7 +117,7 @@ class libmovies:
         self.check_setting = control.setting('library.check_movie') or 'false'
         self.library_setting = control.setting('library.update') or 'true'
         self.dupe_setting = control.setting('library.check') or 'true'
-
+        self.silentDialog = False
         self.infoDialog = False
 
 
