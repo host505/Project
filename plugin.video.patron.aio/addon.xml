@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.patron.aio" name="[COLOR red]Pa[COLOR snow]tr[COLOR green]on [COLOR red]A[COLOR snow]I[COLOR dodgerblue]O[/COLOR]" version="1.7.5" provider-name="EPB">
+<addon id="plugin.video.patron.aio" name="[COLOR red]Pa[COLOR snow]tr[COLOR green]on [COLOR red]A[COLOR snow]I[COLOR dodgerblue]O[/COLOR]" version="1.7.6" provider-name="EPB">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
