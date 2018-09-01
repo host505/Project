@@ -161,7 +161,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.aragon" name=" [COLOR gold][B]A[COLOR lime]RAGON [COLOR gold][B]L[COLOR lime]IVE[/B][/COLOR]" version="1.0.4" provider-name="RACC/Gandelf">
+<addon id="plugin.video.aragon" name=" [COLOR gold][B]A[COLOR lime]RAGON [COLOR gold][B]L[COLOR lime]IVE[/B][/COLOR]" version="1.0.5" provider-name="RACC/Gandelf">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="0.5.5" />
@@ -172,7 +172,7 @@
         <import addon="script.module.xmltodict" version="0.9.0" />
         <!--<import addon="script.module.web-pdb" version="1.0"/>-->
         <import addon="script.module.resolveurl" />
-        <import addon="script.module.mobdro" version="11" />
+        <import addon="script.module.mobdro" />
         <import addon="script.module.aragon.net" version="1.0" />
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
