@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.aragon" name=" [COLOR gold][B]A[COLOR lime]RAGON [COLOR gold][B]L[COLOR lime]IVE[/B][/COLOR]" version="1.0.3" provider-name="RACC/Gandelf">
+<addon id="plugin.video.aragon" name=" [COLOR gold][B]A[COLOR lime]RAGON [COLOR gold][B]L[COLOR lime]IVE[/B][/COLOR]" version="1.0.4" provider-name="RACC/Gandelf">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="0.5.5" />
