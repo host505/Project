@@ -714,7 +714,7 @@ msgid "Please Wait"
 msgstr "אנא המתן"
 
 msgctxt "#30033"
-msgid "Depositing Twenty Cents"
+msgid "Processing Link"
 msgstr "מעבד קישור"
 
 msgctxt "#30034"

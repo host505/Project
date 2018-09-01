@@ -16,6 +16,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     Version:
+        2018-08-19
+            - Added next page option for trakt limits urls
+                http://api.trakt.tv/movies/trending?limit=25&page=1
+        2018-07-02
+            - Updated Clear Cache Hook
         2018-05-14
             Latest version to include with a Jen Release
 
@@ -95,7 +100,10 @@ import __builtin__
 import pickle
 import time
 import urlparse
+import urllib2
 import urllib
+import socket
+import ssl
 import base64
 
 import requests
@@ -250,7 +258,9 @@ def trakt(url):
         response = requests.get(url, headers=headers)
         response_headers = response.headers
         response = response.json()
+
         page = response_headers.get("X-Pagination-Page", "")
+
         if page:
             pages = response_headers.get("X-Pagination-Page-Count")
             response = (response, pages)
@@ -297,18 +307,25 @@ def trakt(url):
                         xml += get_show_xml(item)
                         __builtin__.content_type = "tvshows"
         if pages:
-            splitted = url.split("?")
-            if len(splitted) > 1:
-                args = urlparse.parse_qs(splitted[1])
-                page = int(args.get("page", [1])[0])
-                if not args.get("page", ""):
-                    args["page"] = 2
-                else:
-                    args["page"] = str(page + 1)
-                next_url = "%s?%s" % (splitted[0], urllib.urlencode(args))
+            if 'limit' in url:
+                link, page = url.split('&page=')
+                page = int(page)
+                next_page = page + 1
+                next_url = '%s&page=%s' % (link, next_page)
+
             else:
-                page = 1
-                next_url = urlparse.urljoin(splitted[0], "?page=2")
+                splitted = url.split("?")
+                if len(splitted) > 1:
+                    args = urlparse.parse_qs(splitted[1])
+                    page = int(args.get("page", [1])[0])
+                    if not args.get("page", ""):
+                        args["page"] = 2
+                    else:
+                        args["page"] = str(page + 1)
+                    next_url = "%s?%s" % (splitted[0], urllib.urlencode(args))
+                else:
+                    page = 1
+                    next_url = urlparse.urljoin(splitted[0], "?page=2")
 
             xml += "<dir>\n"\
                    "\t<title>Next Page >></title>\n"\
@@ -720,6 +737,27 @@ def trakt_refresh_token():
         addon.setSetting("TRAKT_ACCESS_TOKEN", response["access_token"])
         addon.setSetting("TRAKT_REFRESH_TOKEN", response["refresh_token"])
         return response["access_token"]
+
+def get_anticipated(self, section, page=None, filters=None):
+    if filters is None: filters = {}
+    url = '/%s/anticipated' % (TRAKT_SECTIONS[section])
+    params = {'extended': 'full', 'limit': self.list_size}
+    params.update(filters)
+    if page: params['page'] = page
+    response = self.__call_trakt(url, params=params)
+    return [item[TRAKT_SECTIONS[section][:-1]] for item in response]
+    xml = ""
+    name = item["anticipated"]["name"]
+    slug = item["anticipated"]["ids"]["slug"]
+    xml += "<dir>\n"\
+           "\t<title>%s Movies</title>\n"\
+           "\t<trakt>https://api.trakt.tv/anticipated/%s/movies</trakt>\n"\
+           "</dir>\n\n" % (name, slug)
+    xml += "<dir>\n"\
+           "\t<title>%s Shows</title>\n"\
+           "\t<trakt>https://api.trakt.tv/anticipated/%s/shows</trakt>\n"\
+           "</dir>\n\n" % (name, slug)
+    return xml
 
 def set_watched(self, section, item, season='', episode='', watched=True):
     url = '/sync/history'

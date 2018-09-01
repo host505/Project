@@ -28,7 +28,10 @@ from koding import route
 import sys
 import xbmcplugin
 
-import resolveurl
+try:
+    import resolveurl
+except:
+    import urlresolver as resolveurl
 
 from resources.lib.util.xml import JenItem, JenList
 from resources.lib.util.messages import get_link_message, get_searching_message
@@ -696,7 +699,7 @@ def get_sources(item):
     jenplayer.setItem(item)
 
     busy_dialog.create(xbmcaddon.Addon().getAddonInfo('name'),
-                       _("Depositing Twenty Cents"))
+                       _("Processing Link"))
     preset = choose_quality(link)
     message = get_searching_message(preset)
     played = False

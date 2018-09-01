@@ -20,7 +20,10 @@ from koding import Download
 from koding import route, Run 
 
 
-message_xml_url = "https://raw.githubusercontent.com/MrBlamo420/news/master/news.xml"
+addon_id = xbmcaddon.Addon().getAddonInfo('id')
+ownAddon = xbmcaddon.Addon(id=addon_id)
+message_xml_url = ownAddon.getSetting('message_xml_url')
+
 
 @route(mode="dialog_example")
 def Dialog_Example():
@@ -31,5 +34,5 @@ def Dialog_Example():
     main_text = mytext
     my_buttons = ['Close']
     my_choice = koding.Custom_Dialog(main_content=main_text,pos='center',size='900x600',buttons=my_buttons,transparency=90,highlight_color='yellow',header='Latest News')
-    if my_choice ==0: 
-        root()
+    if my_choice == 0: 
+        return
