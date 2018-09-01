@@ -911,6 +911,23 @@ This is a Non-profit resource, organized solely for educational purposes which i
   </extension>
 </addon>
 
+<addon id="script.module.catchuptv" name="US CatchUp TV" provider-name="Mr.Blamo" version="0.0.1">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0" />
+        <import addon="script.module.requests" />
+    </requires>
+    <extension library="main.py" point="xbmc.python.pluginsource">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Catchup on tv shows from a variety of US sources!</summary>
+        <description>Watch freely available full episodes from a variety of US channels! 100% legal!</description>
+        <platform>all</platform>
+        <forum></forum>
+        <website></website>
+    </extension>
+</addon>
+
 <addon id="script.module.deathstreams" name="Mr Blamos Common Libraries" version="1.2.0" provider-name="Mr.Blamo">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
