@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.video.livetvus" name="Live TV" provider-name="Mr.Blamo" version="0.0.1">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0" />
+        <import addon="plugin.video.youtube" />
+    </requires>
+    <extension library="default.py" point="xbmc.python.pluginsource">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Free Live TV</summary>
+        <description>Free Live TV!</description>
+        <platform>all</platform>
+    </extension>
+</addon>

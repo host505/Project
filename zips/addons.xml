@@ -340,7 +340,7 @@ This is a Non-profit resource, organized solely for educational purposes which i
 	</extension>
 </addon>
 
-<addon id="plugin.video.chocolatesaltyballs" name="[COLOR gold]Chocolate Salty Balls[/COLOR]" version="10.2" provider-name="[COLOR gold]Team Deez Nutz[/COLOR]">
+<addon id="plugin.video.chocolatesaltyballs" name="[COLOR gold]Chocolate Salty Balls[/COLOR]" version="10.3" provider-name="[COLOR gold]Team Deez Nutz[/COLOR]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" />
@@ -351,7 +351,6 @@ This is a Non-profit resource, organized solely for educational purposes which i
         <import addon="script.module.xmltodict" />
         <import addon="script.module.dateutil" />
 		<import addon="script.module.catchuptv" />
-        <import addon="script.module.charge" />
         <!--<import addon="script.module.web-pdb" version="1.0"/>-->
         <import addon="script.module.resolveurl" />
     </requires>
@@ -468,6 +467,21 @@ This is a Non-profit resource, organized solely for educational purposes which i
     </description>
     <platform>all</platform>
   </extension>
+</addon>
+
+<addon id="plugin.video.livetvus" name="Live TV" provider-name="Mr.Blamo" version="0.0.1">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0" />
+        <import addon="plugin.video.youtube" />
+    </requires>
+    <extension library="default.py" point="xbmc.python.pluginsource">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Free Live TV</summary>
+        <description>Free Live TV!</description>
+        <platform>all</platform>
+    </extension>
 </addon>
 
 <addon id="plugin.video.madchopz" name="MaD ChopZ" version="0.0.1" provider-name="Rohas">
@@ -923,22 +937,6 @@ This is a Non-profit resource, organized solely for educational purposes which i
     <extension point="xbmc.addon.metadata">
         <summary>Catchup on tv shows from a variety of US sources!</summary>
         <description>Watch freely available full episodes from a variety of US channels! 100% legal!</description>
-        <platform>all</platform>
-        <forum></forum>
-        <website></website>
-    </extension>
-</addon>
-
-<addon id="script.module.charge" name="Charge Live TV" provider-name="Mr.Blamo" version="0.0.1">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0" />
-    </requires>
-    <extension library="default.py" point="xbmc.python.pluginsource">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary>Charge! Live TV</summary>
-        <description>CHARGE! is a new free broadcast network featuring action programming including movies, series and sports entertainment.</description>
         <platform>all</platform>
         <forum></forum>
         <website></website>
