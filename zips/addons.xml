@@ -340,7 +340,7 @@ This is a Non-profit resource, organized solely for educational purposes which i
 	</extension>
 </addon>
 
-<addon id="plugin.video.chocolatesaltyballs" name="[COLOR gold]Chocolate Salty Balls[/COLOR]" version="10.1" provider-name="[COLOR gold]Team Deez Nutz[/COLOR]">
+<addon id="plugin.video.chocolatesaltyballs" name="[COLOR gold]Chocolate Salty Balls[/COLOR]" version="10.2" provider-name="[COLOR gold]Team Deez Nutz[/COLOR]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" />
@@ -350,9 +350,10 @@ This is a Non-profit resource, organized solely for educational purposes which i
         <import addon="script.module.addon.common" />
         <import addon="script.module.xmltodict" />
         <import addon="script.module.dateutil" />
+		<import addon="script.module.catchuptv" />
+        <import addon="script.module.charge" />
         <!--<import addon="script.module.web-pdb" version="1.0"/>-->
         <import addon="script.module.resolveurl" />
-        <!--<import addon="script.module.urlresolver" />-->
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>audio video</provides>
