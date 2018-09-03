@@ -1,3 +1,14 @@
+v0.0.8
+    - Black And White Classic Movie Section added to Movie Mania
+    - Fueled by Death - Podcast Section added
+    - Massively OP - Podcast Section added
+    - Pure Movie Torture section added to Movie Mania (One Click)
+    - Sports Highlights Section Updated
+    - Star Trek section added to Movie Mania
+    - The Duke section added to Movie Mania
+    - TV Calendar added to Networks section
+    - US Local News section added to Arraki TV
+
 v0.0.7
     - Live TV now displays title of channel being played in OSD
     - Spice Room Password now only needed once every 24 hours

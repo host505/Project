@@ -1,5 +1,14 @@
 <arrakis>
     <moviemania>
+        <dir>
+            <title>Black and White</title>
+            <meta>
+                <summary>Classic Black and White Movies</summary>
+            </meta>
+            <bnw>movies</bnw>
+            <thumbnail>https://raw.githubusercontent.com/muaddibttv/artwork/master/arrakis/247/247-movies.png</thumbnail>
+        </dir>
+
         <plugin>
             <title>For Him</title>
             <meta>
@@ -46,12 +55,38 @@
         </dir>
 
         <dir>
+            <title>Pure Movie Torture</title>
+            <meta>
+                <summary>Movies to torture your soul with!</summary>
+            </meta>
+            <link>file://moviemania/torture.xml</link>
+            <thumbnail>https://raw.githubusercontent.com/muaddibttv/artwork/master/arrakis/moviemania/horror.png</thumbnail>
+        </dir>
+
+        <dir>
             <title>Seasonal Movies</title>
             <meta>
                 <summary>Movies and TV Shows for every season!</summary>
             </meta>
             <link>file://moviemania/tts/main.xml</link>
             <thumbnail>https://raw.githubusercontent.com/muaddibttv/artwork/master/arrakis/moviemania/season.png</thumbnail>
+        </dir>
+
+        <dir>
+            <title>The Duke</title>
+            <meta>
+                <summary>Movies with The Duke (John Wayne)</summary>
+            </meta>
+            <duke>all</duke>
+            <thumbnail>https://raw.githubusercontent.com/muaddibttv/artwork/master/arrakis/moviemania/theduke.png</thumbnail>
+        </dir>
+
+        <dir>
+            <title>For the Trekkies</title>
+            <meta>
+                <summary>Everything to make a true Trekkie Drool</summary>
+            </meta>
+            <trekkie>all</trekkie>
         </dir>
     </moviemania>
 </arrakis>

@@ -10,6 +10,24 @@
         </dir>
 
         <dir>
+            <title>Fueled by Death</title>
+            <meta>
+                <summary>Enjoy all the podcast shows from the Fueled By Death Cast podcast</summary>
+            </meta>
+            <link>file://podcasts/deathcast.xml</link>
+            <thumbnail>https://raw.githubusercontent.com/muaddibttv/artwork/master/arrakis/podcasts/deathcast.png</thumbnail>
+        </dir>
+
+        <dir>
+            <title>Massively OP Podcast Show</title>
+            <meta>
+                <summary>Enjoy all the podcasts created by the Massively OP Podcast Team</summary>
+            </meta>
+            <mop>list/1</mop>
+            <thumbnail>https://raw.githubusercontent.com/muaddibttv/artwork/master/arrakis/podcasts/mop.png</thumbnail>
+        </dir>
+
+        <dir>
             <title>P[COLOR red]o[/COLOR]dcast[COLOR red]One[/COLOR]</title>
             <meta>
                 <summary>Browse all the free content from PodcastOne shows</summary>

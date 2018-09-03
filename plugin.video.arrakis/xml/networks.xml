@@ -1,6 +1,14 @@
 <arrakis>
     <networks>
         <dir>
+            <title>TV Calendar</title>
+            <meta>
+                <summary>TV Show Calendar, to find what you want based on the date. Uses Universal Scrapers to find sources</summary>
+            </meta>
+            <tvmaze>calendar</tvmaze>
+        </dir>
+
+        <dir>
             <title>Canadian Networks</title>
             <meta>
                 <summary>Find shows from your favorite networks in Canada. Uses Universal Scrapers to find sources</summary>

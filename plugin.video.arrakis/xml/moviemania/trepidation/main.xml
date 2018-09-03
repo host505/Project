@@ -5,6 +5,7 @@
             <link>file://moviemania/trepidation/thekings.xml</link>
             <thumbnail>https://i.ytimg.com/vi/5RcG9qjOaDI/sddefault.jpg</thumbnail>
         </dir>
+
         <dir>
             <title>Greatest Horror Films Of All Time</title>
             <link>file://moviemania/trepidation/greatesthits.xml</link>

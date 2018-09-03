@@ -31,6 +31,15 @@
         </dir>
 
         <dir>
+            <title>US Local News Broadcasts</title>
+            <meta>
+                <summary>US Local News Broadcasts and Clips</summary>
+            </meta>
+            <link>file://live/local.xml</link>
+            <thumbnail>https://raw.githubusercontent.com/muaddibttv/artwork/master/arrakis/livetv/ustv.png</thumbnail>
+        </dir>
+
+        <dir>
             <title>All TV Categories</title>
             <meta>
                 <title>All TV Categories</title>
