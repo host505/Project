@@ -1,0 +1,489 @@
+# Kodi Media Center language file
+# Addon Name: Catch-up TV & More
+# Addon id: plugin.video.livecatchup
+# Addon Provider: SylvainCecchetto
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: SylvainCecchetto\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# Settings tabs/categories (from 30000 to 30019)
+msgctxt "#30000"
+msgid "Main menu"
+msgstr "תפריט ראשי"
+
+msgctxt "#30001"
+msgid "Countries"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Quality and content"
+msgstr "איכות ותוכן"
+
+msgctxt "#30003"
+msgid "Download"
+msgstr "הורד"
+
+msgctxt "#30004"
+msgid "Accounts"
+msgstr "חשבונות"
+
+msgctxt "#30005"
+msgid "Advanced settings"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Channels"
+msgstr "ערוצים"
+
+msgctxt "#30007"
+msgid "Websites"
+msgstr "אתרי רשת"
+
+
+
+# Settings line separators (from 30010 to 30029)
+msgctxt "#30010"
+msgid "Hide main menu categories"
+msgstr "הסתר קטגוריות בתפריט הראשי"
+
+msgctxt "#30011"
+msgid "Hide channels"
+msgstr ""
+
+msgctxt "#30012"
+msgid "To configure YTDL go settings of script.module.youtube.dl"
+msgstr "כדי לקבוע את התצורה של YTDL עבור אל ההגדרות של script.module.youtube.dl"
+
+msgctxt "#30013"
+msgid "Hide countries"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Hide websites"
+msgstr ""
+
+
+# Main menu (from 30030 to 30049)
+msgctxt "#30030"
+msgid "Live TV"
+msgstr "טלוויזיה חיה"
+
+msgctxt "#30031"
+msgid "Catch-up TV"
+msgstr ""
+
+msgctxt "#30032"
+msgid "Websites"
+msgstr "אתרי רשת"
+
+
+
+# Countries (from 30050 to 30079)
+msgctxt "#30050"
+msgid "France"
+msgstr ""
+
+msgctxt "#30051"
+msgid "Switzerland"
+msgstr ""
+
+msgctxt "#30052"
+msgid "United Kingdom"
+msgstr ""
+
+msgctxt "#30053"
+msgid "International"
+msgstr ""
+
+msgctxt "#30054"
+msgid "Belgium"
+msgstr ""
+
+msgctxt "#30055"
+msgid "Japan"
+msgstr ""
+
+msgctxt "#30056"
+msgid "Canada"
+msgstr ""
+
+msgctxt "#30057"
+msgid "United States of America"
+msgstr ""
+
+msgctxt "#30058"
+msgid "Poland"
+msgstr ""
+
+msgctxt "#30059"
+msgid "Spain"
+msgstr ""
+
+# Channels (from 30080 to 30129)
+msgctxt "#30080"
+msgid "French channels"
+msgstr "ערוצים צרפתיים"
+
+msgctxt "#30081"
+msgid "Belgian channels"
+msgstr "ערוצים בלגיים"
+
+msgctxt "#30082"
+msgid "Japanese channels"
+msgstr "ערוצים יפניים"
+
+msgctxt "#30083"
+msgid "Switzerland channels"
+msgstr ""
+
+msgctxt "#30084"
+msgid "United Kingdom channels"
+msgstr "ערוצים אנגליים"
+
+msgctxt "#30085"
+msgid "International channels"
+msgstr ""
+
+msgctxt "#30086"
+msgid "Canadian channels"
+msgstr ""
+
+msgctxt "#30087"
+msgid "United States channels"
+msgstr ""
+
+msgctxt "#30088"
+msgid "Polish channels"
+msgstr ""
+
+msgctxt "#30089"
+msgid "Spanish channels"
+msgstr ""
+
+# Websites (from 30130 to 30149)
+
+
+
+# Quality and content (from 30150 to 30199)
+msgctxt "#30150"
+msgid "Video quality"
+msgstr "איכות וידאו מיו-טיוב"
+
+msgctxt "#30151"
+msgid "Video quality (BEST|DEFAULT|DIALOG)"
+msgstr "איכות וידאו (הטוב ביותר|ברירת מחדל|תיבת דו-שיח)"
+
+msgctxt "#30152"
+msgid "Contents"
+msgstr "תוכן העניינים"
+
+msgctxt "#30153"
+msgid "Arte: Choose Channel"
+msgstr "Arte: בחר ערוץ"
+
+msgctxt "#30154"
+msgid "France 24: Choose Channel"
+msgstr "France 24: בחר ערוץ"
+
+msgctxt "#30155"
+msgid "Euronews: Choose Channel"
+msgstr "Euronews: בחר ערוץ"
+
+msgctxt "#30156"
+msgid "MTV: Choose Channel"
+msgstr "MTV: בחר ערוץ"
+
+msgctxt "#30157"
+msgid "DW: Choose Channel"
+msgstr "DW: בחר ערוץ"
+
+msgctxt "#30158"
+msgid "France 3 Régions: Choose region"
+msgstr ""
+
+msgctxt "#30159"
+msgid "La 1ère: Choose region"
+msgstr ""
+
+msgctxt "#30160"
+msgid "Bein Sports: Choose Channel"
+msgstr "Bein Sports : בחר ערוץ"
+
+msgctxt "#30161"
+msgid "QVC: Choose Channel"
+msgstr "QVC : בחר ערוץ"
+
+msgctxt "#30162"
+msgid "NHK World: Choose Country"
+msgstr ""
+
+msgctxt "#30163"
+msgid "CGTN: Choose Channel"
+msgstr "CGTN : בחר ערוץ"
+
+msgctxt "#30164"
+msgid "Paramount Channel: Choose Channel"
+msgstr "Paramount Channel : בחר ערוץ"
+
+msgctxt "#30165"
+msgid "Realmadrid TV: Choose Channel"
+msgstr "Realmadrid TV : בחר ערוץ"
+
+msgctxt "#30166"
+msgid "Yes TV: Choose region"
+msgstr ""
+
+msgctxt "#30167"
+msgid "TVP 3: Choose region"
+msgstr ""
+
+# Download (from 30200 to 30239)
+
+msgctxt "#30200"
+msgid "Folder to Download"
+msgstr "תיקיה להורדה"
+
+msgctxt "#30201"
+msgid "Quality of the video to download"
+msgstr ""
+
+msgctxt "#30202"
+msgid "Download in background"
+msgstr ""
+
+
+
+# Accounts (from 30240 to 30259)
+
+msgctxt "#30240"
+msgid "NRJ Login"
+msgstr ""
+
+msgctxt "#30241"
+msgid "NRJ Password"
+msgstr ""
+
+msgctxt "#30242"
+msgid "VRT NU Login"
+msgstr ""
+
+msgctxt "#30243"
+msgid "VRT NU Password"
+msgstr ""
+
+
+# Reserved space for other tab/category in settins (from 30260 to 30339)
+
+
+# OpenVPN (from 30340 to 30369)
+msgctxt "#30340"
+msgid "Enable VPN feature"
+msgstr ""
+
+msgctxt "#30341"
+msgid "OpenVPN filepath"
+msgstr ""
+
+msgctxt "#30342"
+msgid "Import OpenVPN configuration file"
+msgstr ""
+
+msgctxt "#30343"
+msgid "Delete OpenVPN configuration file"
+msgstr ""
+
+msgctxt "#30344"
+msgid "Additional arguments"
+msgstr ""
+
+msgctxt "#30345"
+msgid "Run OpenVPN with superuser privileges (sudo)"
+msgstr ""
+
+msgctxt "#30346"
+msgid "Ask for sudo password"
+msgstr ""
+
+msgctxt "#30347"
+msgid "Connect VPN"
+msgstr ""
+
+msgctxt "#30348"
+msgid "Choose a name for OpenVPN configuration"
+msgstr ""
+
+msgctxt "#30349"
+msgid "This OpenVPN configuration name already exists. Overwrite?"
+msgstr ""
+
+msgctxt "#30350"
+msgid "Import cancelled"
+msgstr ""
+
+msgctxt "#30351"
+msgid "Import failed. You must specify a name for the OpenVPN configuration"
+msgstr ""
+
+msgctxt "#30352"
+msgid "Select OpenVPN configuration to run"
+msgstr ""
+
+msgctxt "#30353"
+msgid "Enter your sudo password"
+msgstr ""
+
+msgctxt "#30354"
+msgid "Started VPN connection"
+msgstr ""
+
+msgctxt "#30355"
+msgid "Stopped VPN connection"
+msgstr ""
+
+msgctxt "#30356"
+msgid "An existing OpenVPN instance appears to be running."
+msgstr ""
+
+msgctxt "#30357"
+msgid "Disconnect it?"
+msgstr ""
+
+msgctxt "#30358"
+msgid "An error has occurred whilst trying to connect OpenVPN"
+msgstr ""
+
+msgctxt "#30359"
+msgid "Disconnect VPN"
+msgstr ""
+
+msgctxt "#30360"
+msgid "Select OpenVPN configuration to delete"
+msgstr ""
+
+msgctxt "#30361"
+msgid "Connect/Disconnect VPN"
+msgstr ""
+
+
+
+# Advanced settings (from 30370 to 30399)
+
+msgctxt "#30370"
+msgid "Clear cache"
+msgstr ""
+
+msgctxt "#30371"
+msgid "Cache cleared"
+msgstr ""
+
+
+# Reserved space for other tab/category in settins (from 30400 to 30499)
+
+
+# Context menu (from 30500 to 30599)
+msgctxt "#30500"
+msgid "Move down"
+msgstr "רד למטה"
+
+msgctxt "#30501"
+msgid "Move up"
+msgstr "עבור למעלה"
+
+msgctxt "#30502"
+msgid "Hide"
+msgstr "הסתר"
+
+msgctxt "#30503"
+msgid "Download"
+msgstr "הורד"
+
+
+# Dialog boxes (from 30600 to 30699)
+msgctxt "#30600"
+msgid "Information"
+msgstr "מידע"
+
+msgctxt "#30601"
+msgid "To re-enable hidden items go to the plugin settings"
+msgstr "כדי להפעיל מחדש את הפריטים המוסתרים, עבור אל ההגדרות של ההרחבה"
+
+
+
+# Others (from 30700 to 30799)
+msgctxt "#30700"
+msgid "More videos..."
+msgstr "קטעי וידאו נוספים..."
+
+msgctxt "#30701"
+msgid "All videos"
+msgstr "נגן את כל הסרטונים"
+
+msgctxt "#30702"
+msgid "DRM protected video"
+msgstr "וידאו מוגן DRM"
+
+msgctxt "#30703"
+msgid "Search"
+msgstr "חיפוש"
+
+msgctxt "#30704"
+msgid "Last videos"
+msgstr "קטעי וידאו אחרונים"
+
+msgctxt "#30705"
+msgid "From A to Z"
+msgstr "מ-א עד ת"
+
+msgctxt "#30706"
+msgid "Ascending"
+msgstr "בסדר עולה"
+
+msgctxt "#30707"
+msgid "Descending"
+msgstr "בסדר יורד"
+
+msgctxt "#30708"
+msgid "More programs..."
+msgstr "עוד תוכניות..."
+
+msgctxt "#30709"
+msgid "Choose video quality"
+msgstr "בחר איכות וידאו"
+
+msgctxt "#30710"
+msgid "Video stream no longer exists"
+msgstr "הזרמת הווידאו כבר לא קיימת"
+
+msgctxt "#30711"
+msgid "Authentication failed"
+msgstr ""
+
+msgctxt "#30712"
+msgid "Video with an account needed"
+msgstr ""
+
+msgctxt "#30713"
+msgid "Geo-blocked video"
+msgstr ""
+
+msgctxt "#30714"
+msgid "Search videos"
+msgstr ""
+
+msgctxt "#30715"
+msgid "Search programs"
+msgstr ""
+
+msgctxt "#30716"
+msgid "Video stream is not available"
+msgstr ""

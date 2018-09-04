@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.chocolatesaltyballs" name="[COLOR gold]Chocolate Salty Balls[/COLOR]" version="10.3" provider-name="[COLOR gold]Team Deez Nutz[/COLOR]">
+<addon id="plugin.video.chocolatesaltyballs" name="[COLOR gold]Chocolate Salty Balls[/COLOR]" version="10.4" provider-name="[COLOR gold]Team Deez Nutz[/COLOR]">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" />
