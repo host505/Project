@@ -17,7 +17,7 @@
 #  http://www.gnu.org/copyleft/gpl.html                                        #
 ################################################################################
 
-import xbmc, xbmcaddon, xbmcgui, xbmcplugin, os, sys, xbmcvfs, HTMLParser, glob, zipfile, json
+import xbmc, xbmcaddon, xbmcgui, xbmcplugin, os, sys, xbmcvfs, HTMLParser, glob, json
 import shutil
 import errno
 import string
@@ -73,6 +73,10 @@ TWODAYS        = TODAY + timedelta(days=2)
 THREEDAYS      = TODAY + timedelta(days=3)
 ONEWEEK        = TODAY + timedelta(days=7)
 KODIV          = float(xbmc.getInfoLabel("System.BuildVersion")[:4])
+if KODIV > 17:
+	import zfile as zipfile #FTG mod for Kodi 18
+else:
+	import zipfile
 EXCLUDES       = uservar.EXCLUDES
 BUILDFILE      = uservar.BUILDFILE
 APKFILE        = uservar.APKFILE
