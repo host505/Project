@@ -17,8 +17,13 @@
 #  http://www.gnu.org/copyleft/gpl.html                                        #
 ################################################################################
 
-import zipfile, xbmcaddon, xbmc, uservar, sys, os, time
+import xbmcaddon, xbmc, uservar, sys, os, time
 import wizard as wiz
+KODIV          = float(xbmc.getInfoLabel("System.BuildVersion")[:4])
+if KODIV > 17:
+	import zfile as zipfile #FTG mod for Kodi 18
+else:
+	import zipfile
 
 ADDON_ID       = uservar.ADDON_ID
 ADDONTITLE     = uservar.ADDONTITLE

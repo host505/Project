@@ -21,7 +21,7 @@ import xbmc, xbmcaddon, xbmcgui, xbmcplugin, os, sys, xbmcvfs, glob
 import shutil
 import urllib2,urllib
 import re
-import zipfile
+
 import uservar
 import fnmatch
 import base64
@@ -122,6 +122,10 @@ TODAY            = date.today()
 TOMORROW         = TODAY + timedelta(days=1)
 THREEDAYS        = TODAY + timedelta(days=3)
 KODIV            = float(xbmc.getInfoLabel("System.BuildVersion")[:4])
+if KODIV > 17:
+	from resources.libs import zfile as zipfile #FTG mod for Kodi 18
+else:
+	import zipfile
 MCNAME           = wiz.mediaCenter()
 EXCLUDES         = uservar.EXCLUDES
 BUILDFILE        = uservar.BUILDFILE
