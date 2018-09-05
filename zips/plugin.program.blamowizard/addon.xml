@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.program.blamowizard" name="69 Death Wizard" version="1.8" provider-name="Mr.Blamo">
+<addon id="plugin.program.blamowizard" name="69 Death Wizard" version="1.9" provider-name="Mr.Blamo">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
