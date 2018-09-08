@@ -136,6 +136,7 @@
         <setting id="provider.rlsbb" type="bool" label="RLSBB" default="true" />
         <setting id="provider.scenerls" type="bool" label="SCENERLS" default="true" />
         <setting id="provider.series9" type="bool" label="SERIES9" default="true" />
+        <setting id="provider.sezonlukdizi" type="bool" label="SEZONLUKDIZI" default="true" />
         <setting id="provider.solarmoviez" type="bool" label="SOLARMOVIEZ" default="true" />
         <setting id="provider.timewatch" type="bool" label="TIMETOWATCH" default="false" />
         <setting id="provider.tvbox" type="bool" label="TVBOX" default="false" />
