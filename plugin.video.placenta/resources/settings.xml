@@ -113,7 +113,7 @@
         <setting id="provider.flixanity" type="bool" label="FLIXANITY" default="true" />
         <setting id="provider.fmovied6" type="bool" label="FMOVIED6" default="true" />
         <setting id="provider.fmovies" type="bool" label="FMOVIES" default="true" />
-        <setting id="provider.freefmovies" type="bool" label="~FREEFMOVIES" default="true" />
+        <setting id="provider.freefmovies" type="bool" label="FREEFMOVIES" default="true" />
         <setting id="provider.freeputlockers" type="bool" label="FREEPUTLOCKERS" default="true" />
         <setting id="provider.furk" type="bool" label="FURK" default="true" />
         <setting id="provider.genvideos" type="bool" label="GENVIDEOS" default="true" />
