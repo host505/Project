@@ -12,7 +12,7 @@ BUILDFILE      = 'https://raw.githubusercontent.com/MrBlamo420/wizard_files/mast
 # 0 being every startup of kodi
 UPDATECHECK    = 0
 # Text File with apk info in it.
-APKFILE        = 'http://mrblamo.xyz/img/apk.txt'
+APKFILE        = 'http://mrblamo.xyz/new/apk.txt'
 # Text File with Youtube Videos urls.  Leave as 'http://' to ignore
 YOUTUBETITLE   = ''
 YOUTUBEFILE    = 'http://'
@@ -53,7 +53,7 @@ SPACER         = '='
 
 # You can edit these however you want, just make sure that you have a %s in each of the
 # THEME's so it grabs the text from the menu item
-COLOR1         = 'purple'
+COLOR1         = 'blueviolet'
 COLOR2         = 'white'
 # Primary menu items   / %s is the menu item and is required
 THEME1         = '[COLOR '+COLOR1+'][B][I]([COLOR '+COLOR2+']69 Death Wizard[/COLOR])[/B][/COLOR] [COLOR '+COLOR2+']%s[/COLOR][/I]'
@@ -104,7 +104,7 @@ REPOZIPURL     = ''
 # Enable Notification screen Yes or No
 ENABLE         = 'Yes'
 # Url to notification file
-NOTIFICATION   = 'https://raw.githubusercontent.com/MrBlamo420/wizard_files/master/notify.txt'
+NOTIFICATION   = 'http://mrblamo.xyz/new/notify.txt'
 # Use either 'Text' or 'Image'
 HEADERTYPE     = 'Text'
 HEADERMESSAGE  = ''
