@@ -131,7 +131,7 @@
         <setting id="provider.m4u" type="bool" label="M4U" default="true" />
         <setting id="provider.m4ufree" type="bool" label="M4UFREE" default="true" />
         <setting id="provider.megahd" type="bool" label="MEGAHD" default="true" />
-        <setting id="provider.megavid" type="bool" label="MEGACID" default="true" />
+        <setting id="provider.megvid" type="bool" label="MEGVID" default="true" />
         <setting id="provider.movie4korg" type="bool" label="MOVIE4K" default="true" />
         <setting id="provider.movie4kto" type="bool" label="MOVIE4KTO" default="false" />
         <setting id="provider.movieon" type="bool" label="MOVIEON" default="true" />
@@ -148,7 +148,7 @@
         <setting id="provider.ororo" type="bool" label="ORORO" default="true" />
         <setting id="provider.phazeddl" type="bool" label="PHAZEDLL" default="true" />
         <setting id="provider.popcorn" type="bool" label="POPCORN" default="true" />
-        <setting id="provider.pronen" type="bool" label="PRONEN" default="false" />
+        <setting id="provider.pron" type="bool" label="PRONEN" default="false" />
         <setting id="provider.rajahoki88" type="bool" label="RAJAHOKI88" default="true" />
         <setting id="provider.rarbg" type="bool" label="RARBG" default="true" />
         <setting id="provider.rlsbb" type="bool" label="RLSBB" default="true" />
