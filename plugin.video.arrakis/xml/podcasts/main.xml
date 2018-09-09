@@ -44,5 +44,14 @@
             <link>file://podcasts/podbay.xml</link>
             <thumbnail>https://raw.githubusercontent.com/muaddibttv/artwork/master/arrakis/podcasts/podbay.png</thumbnail>
         </dir>
+
+        <dir>
+            <title>Tubecasts</title>
+            <meta>
+                <summary>Enjoy some of the top podcast shows found on YouTube</summary>
+            </meta>
+            <link>file://podcasts/tubecasts.xml</link>
+            <thumbnail>https://raw.githubusercontent.com/muaddibttv/artwork/master/arrakis/podcasts/tubecasts.png</thumbnail>
+        </dir>
     </podcastmain>
 </arrakis>

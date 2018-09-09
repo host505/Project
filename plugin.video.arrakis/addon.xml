@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.arrakis" name="Arrakis" version="0.0.8" provider-name="69 Death Squad">
+<addon id="plugin.video.arrakis" name="Arrakis" version="0.0.9" provider-name="69 Death Squad">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
