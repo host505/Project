@@ -239,7 +239,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.blamo" version="2.6.3" name="Death Streams" provider-name="Mr.Blamo">
+<addon id="plugin.video.blamo" version="2.6.4" name="Death Streams" provider-name="Mr.Blamo">
     <requires>
 		<import addon="xbmc.python" version="2.19.0"/>
         <import addon="script.module.pyxbmct"/>
