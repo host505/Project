@@ -315,7 +315,7 @@ class libtvshows:
         control.idle()
 
         if not control.condVisibility('Window.IsVisible(infodialog)') and not control.condVisibility('Player.HasVideo'):
-            control.infoDialog(control.lang(32608).encode('utf-8'), time=10000000)
+            control.infoDialog(control.lang(32552).encode('utf-8'), time=10000000)
             self.infoDialog = True
             self.silentDialog = True
 
