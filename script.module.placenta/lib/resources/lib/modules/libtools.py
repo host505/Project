@@ -160,6 +160,29 @@ class libmovies:
         if self.library_setting == 'true' and not control.condVisibility('Library.IsScanningVideo') and files_added > 0:
             control.execute('UpdateLibrary(video)')
 
+    def silent(self, url):
+        control.idle()
+
+        if not control.condVisibility('Window.IsVisible(infodialog)') and not control.condVisibility('Player.HasVideo'):
+            control.infoDialog(control.lang(32552).encode('utf-8'), time=10000000)
+            self.infoDialog = True
+            self.silentDialog = True
+
+        from resources.lib.indexers import movies
+        items = movies.movies().get(url, idx=False)
+        if items == None: items = []
+
+        for i in items:
+            try:
+                if xbmc.abortRequested == True: return sys.exit()
+                self.add('%s (%s)' % (i['title'], i['year']), i['title'], i['year'], i['imdb'], i['tmdb'], range=True)
+            except:
+                pass
+
+        if self.infoDialog == True:
+            self.silentDialog = False
+            control.infoDialog("Trakt Movies Sync Complete", time=1)
+
 
     def range(self, url):
         control.idle()
@@ -221,13 +244,14 @@ class libtvshows:
 
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.date = (self.datetime - datetime.timedelta(hours = 24)).strftime('%Y%m%d')
-
+        self.silentDialog = False
         self.infoDialog = False
         self.block = False
 
 
     def add(self, tvshowtitle, year, imdb, tvdb, range=False):
-        if not control.condVisibility('Window.IsVisible(infodialog)') and not control.condVisibility('Player.HasVideo'):
+        if not control.condVisibility('Window.IsVisible(infodialog)') and not control.condVisibility('Player.HasVideo')\
+                and self.silentDialog is False:
             control.infoDialog(control.lang(32552).encode('utf-8'), time=10000000)
             self.infoDialog = True
 
@@ -291,24 +315,24 @@ class libtvshows:
         control.idle()
 
         if not control.condVisibility('Window.IsVisible(infodialog)') and not control.condVisibility('Player.HasVideo'):
-            control.infoDialog(control.lang(32552).encode('utf-8'), time=10000000)
+            control.infoDialog(control.lang(32608).encode('utf-8'), time=10000000)
             self.infoDialog = True
             self.silentDialog = True
 
-        from resources.lib.indexers import movies
-        items = movies.movies().get(url, idx=False)
+        from resources.lib.indexers import tvshows
+        items = tvshows.tvshows().get(url, idx=False)
         if items == None: items = []
 
         for i in items:
             try:
                 if xbmc.abortRequested == True: return sys.exit()
-                self.add('%s (%s)' % (i['title'], i['year']), i['title'], i['year'], i['imdb'], i['tmdb'], range=True)
+                self.add(i['title'], i['year'], i['imdb'], i['tvdb'], range=True)
             except:
                 pass
 
-        if self.infoDialog == True:
+        if self.infoDialog is True:
             self.silentDialog = False
-            control.infoDialog("Trakt Movies Sync Complete", time=1)
+            control.infoDialog("Trakt TV Show Sync Complete", time=1)
 
 
     def range(self, url):
