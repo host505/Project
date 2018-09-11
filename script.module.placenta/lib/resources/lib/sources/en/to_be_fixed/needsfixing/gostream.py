@@ -12,171 +12,137 @@
 # Addon id: plugin.video.placenta
 # Addon Provider: Mr.Blamo
 
-import urlparse,urllib,re,json,xbmc
 
-from resources.lib.modules import client, cleantitle
+import re,urllib,urlparse,time,json
+
+from resources.lib.modules import control
 from resources.lib.modules import cleantitle
-from resources.lib.modules import log_utils
+from resources.lib.modules import client
+from resources.lib.modules import jsunpack
 from resources.lib.modules import source_utils
-from resources.lib.modules import directstream
 
 class source:
     def __init__(self):
         self.priority = 1
         self.language = ['en']
-        self.domains = ['123movies.as']
-        self.base_link = 'https://123movies.ph/'
-        self.source_link = 'https://gomostream.com'
-        self.episode_path = '/episodes/%s-%sx%s/'
-        self.movie_path = '/movies/%s-watch-online-free-123movies/'
-        self.decode_file = '/decoding_v2.php'
-        self.grabber_file = '/get.php'
+        self.domains = ['gostream.is','gomovies.to','gomovies.sc']
+        self.base_link = 'https://www3.gomovies.sc/'
+        self.search_link = '/searching-for/%s/'
+        self.user = control.setting('gostream.user')
+        self.password = control.setting('gostream.pass')
 
     def movie(self, imdb, title, localtitle, aliases, year):
         try:
-            url = {'title': title, 'year': year}
-            return urllib.urlencode(url)
-
-        except Exception:
+            url = {'imdb': imdb, 'title': title, 'year': year}
+            url = urllib.urlencode(url)
+            return url
+        except:
             return
+
 
     def tvshow(self, imdb, tvdb, tvshowtitle, localtvshowtitle, aliases, year):
         try:
-            data = {'tvshowtitle': tvshowtitle, 'year': year, 'imdb': imdb}
-            return urllib.urlencode(data)
-
-        except Exception:
+            url = {'imdb': imdb, 'tvdb': tvdb, 'tvshowtitle': tvshowtitle, 'year': year}
+            url = urllib.urlencode(url)
+            return url
+        except:
             return
+
 
     def episode(self, url, imdb, tvdb, title, premiered, season, episode):
         try:
-            data = urlparse.parse_qs(url)
-            data = dict((i, data[i][0]) for i in data)
-            data.update({'season': season, 'episode': episode, 'title': title, 'premiered': premiered})
+            if url == None: return
 
-            return urllib.urlencode(data)
-
-        except Exception:
+            url = urlparse.parse_qs(url)
+            url = dict([(i, url[i][0]) if url[i] else (i, '') for i in url])
+            url['title'], url['premiered'], url['season'], url['episode'] = title, premiered, season, episode
+            url = urllib.urlencode(url)
+            return url
+        except:
             return
+
 
     def sources(self, url, hostDict, hostprDict):
         try:
             sources = []
 
-            data = urlparse.parse_qs(url)
-            data = dict((i, data[i][0]) for i in data)
+            if url == None: return sources
 
-            if 'episode' in data:
-                url = self.__get_episode_url(data)
-                get_body = 'type=episode&%s=%s&imd_id=%s&seasonsNo=%02d&episodesNo=%02d'
+            if (self.user != '' and self.password != ''): #raise Exception()
+
+               login = urlparse.urljoin(self.base_link, '/login.html')
+
+               post = urllib.urlencode({'username': self.user, 'password': self.password, 'submit': 'Login'})
+
+               cookie = client.request(login, post=post, output='cookie', close=False)
+
+               r = client.request(login, post=post, cookie=cookie, output='extended')
+
+               headers = {'User-Agent': r[3]['User-Agent'], 'Cookie': r[4]}
             else:
-                url = self.__get_movie_url(data)
+               headers = {}
 
-            response = client.request(url)
-            url = re.findall('<iframe .+? src="(.+?)"', response)[0]
 
-            response = client.request(url)
+            if not str(url).startswith('http'):
 
-            token = re.findall('var tc = \'(.+?)\'', response)[0]
-            seeds = re.findall('_tsd_tsd\(s\) .+\.slice\((.+?),(.+?)\).+ return .+? \+ \"(.+?)\"\+\"(.+?)";', response)[0]
-            pair = re.findall('\'type\': \'.+\',\s*\'(.+?)\': \'(.+?)\'', response)[0]
+                data = urlparse.parse_qs(url)
+                data = dict([(i, data[i][0]) if data[i] else (i, '') for i in data])
 
-            header_token = self.__xtoken(token, seeds)
-            body = 'tokenCode=' + token
+                title = data['tvshowtitle'] if 'tvshowtitle' in data else data['title']
+                if 'season' in data: season = data['season']
+                if 'episode' in data: episode = data['episode']
+                year = data['year']
 
-            headers = {
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'x-token': header_token
-            }
+                query = urlparse.urljoin(self.base_link, self.search_link % urllib.quote_plus(cleantitle.getsearch(title)))
+                query2 = urlparse.urljoin(self.base_link, self.search_link % re.sub('\s','+',title))
+                r = client.request(query)
+                r = client.parseDOM(r, 'div', attrs = {'class': 'ml-item'})
+                if len(r)==0:
+                    r = client.request(query2)
+                    r = client.parseDOM(r, 'div', attrs = {'class': 'ml-item'})
+                r = zip(client.parseDOM(r, 'a', ret='href'), client.parseDOM(r, 'a', ret='title'), client.parseDOM(r, 'a', ret='data-url'))
+                
+                if 'tvshowtitle' in data:                   
+                    cltitle = cleantitle.get(title+'season'+season)
+                    cltitle2 = cleantitle.get(title+'season%02d'%int(season))
+                else:
+                    cltitle = cleantitle.get(title)
 
-            url = urlparse.urljoin(self.source_link, self.decode_file)
-            response = client.request(url, XHR=True, post=body, headers=headers)
+                r = [i for i in r if cltitle == cleantitle.get(i[1]) or cltitle2 == cleantitle.get(i[1])]
+                id = [re.findall('/(\d+)$',i[2])[0] for i in r][0]
 
-            sources_dict = json.loads(response)
+                ajx = urlparse.urljoin(self.base_link, '/ajax/movie_episodes/'+id)
 
-            for source in sources_dict:
-                try:
-                    if 'vidushare.com' in source:
-                        sources.append({
-                            'source': 'CDN',
-                            'quality': 'HD',
-                            'language': 'en',
-                            'url': source,
-                            'direct': True,
-                            'debridonly': False
-                        })
-                except Exception:
-                    pass
+                r = client.request(ajx)
+                if 'episode' in data:
+                    eids = re.findall(r'title=\\"Episode\s+%02d.*?data-id=\\"(\d+)'%int(episode),r)
+                else:
+                    eids = re.findall(r'title=.*?data-id=\\"(\d+)',r)
 
-            body = get_body % (pair[0], pair[1], data['imdb'], int(data['season']), int(data['episode']))
-
-            url = urlparse.urljoin(self.source_link, self.grabber_file)
-            response = client.request(url, XHR=True, post=body, headers=headers)
-
-            sources_dict = json.loads(response)
-
-            for source in sources_dict:
-                try:
-                    quality = source_utils.label_to_quality(source['label'])
-                    link = source['file']
-
-                    if 'lh3.googleusercontent' in link:
-                        link = directstream.googleredirect(link)
-
-                    sources.append({
-                        'source': 'gvideo',
-                        'quality': quality,
-                        'language': 'en',
-                        'url': link,
-                        'direct': True,
-                        'debridonly': False
-                    })
-
-                except Exception:
-                    pass
-
+                for eid in eids:
+                    try:
+                        ajx = 'ajax/movie_token?eid=%s&mid=%s&_=%d' % (eid, id, int(time.time() * 1000))
+                        ajx = urlparse.urljoin(self.base_link, ajx)
+                        r = client.request(ajx)
+                        [x,y] = re.findall(r"_x='([^']+)',\s*_y='([^']+)'",r)[0]
+                        ajx = 'ajax/movie_sources/%s?x=%s&y=%s'%(eid,x,y)
+                        ajx = urlparse.urljoin(self.base_link, ajx)
+                        r = client.request(ajx)
+                        r = json.loads(r)
+                        r = r['playlist'][0]['sources']
+                        for i in r:
+                            try: label = source_utils.label_to_quality(i['label']) 
+                            except: label = 'SD'
+                            sources.append({'source': 'cdn', 'quality': label, 'language': 'en', 'url': i['file'], 'direct': True, 'debridonly': False})
+                    except:
+                        pass
 
             return sources
-
         except:
             return sources
+
 
     def resolve(self, url):
         return url
 
-    def __get_episode_url(self, data):
-        try:
-            clean_title = cleantitle.geturl(data['tvshowtitle'])
-            query = self.episode_path % (clean_title, data['season'], data['episode'])
 
-            url = urlparse.urljoin(self.base_link, query)
-            html = client.request(url)
-
-            token = re.findall('\/?watch-token=(.*?)\"', html)[0]
-
-            return url + ('?watch-token=%s' % token)
-
-        except Exception:
-            return
-
-    def __get_movie_url(self, data):
-            clean_title = cleantitle.geturl(data['title'])
-            query = self.movie_path % clean_title
-
-            url = urlparse.urljoin(self.base_link, query)
-            html = client.request(url)
-
-            token = re.findall('\/?watch-token=(.*?)\"', html)[0]
-
-            return url + ('?watch-token=%s' % token)
-
-    def __xtoken(self, token, seeds):
-        try:
-            xtoken = token[int(seeds[0]):int(seeds[1])]
-            xtoken = list(xtoken)
-            xtoken.reverse()
-
-            return ''.join(xtoken) + seeds[2] + seeds[3]
-
-        except Exception:
-            return

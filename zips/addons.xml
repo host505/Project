@@ -146,6 +146,27 @@
 
 </addon>
 
+<addon id="plugin.program.tantrumadvsettings" name="Tantrum Advanced Settings" version="0.0.1" provider-name="MuadDib">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>Create, view, edit and delete your Kodi v17 advancedsettings.xml file in a user-friendly gui</summary>
+        <description>All settings follow the Kodi Wiki[CR][CR]With this tool you can create your advanced settings directly from Kodi[CR][CR]If you don't know what a setting does, don't change it![CR][CR]This is a fork of the Easy Advanced Settings, version 0.8.9 (Kodi v16 standard)</description>
+        <platform>all</platform>
+        <language>en</language>
+        <license>Beerware rev. 42</license>
+        <forum/>
+        <website>http://www.tantrumtv.com</website>
+        <source/>
+        <email>muaddib@tantrumtv.com</email>
+    </extension>
+</addon>
+
 <addon id="plugin.program.TerrorizeWizard" name="Terrorize Wizard" version="1.3" provider-name="Terrorize Kodi">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -189,7 +210,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.arrakis" name="Arrakis" version="0.0.8" provider-name="69 Death Squad">
+<addon id="plugin.video.arrakis" name="Arrakis" version="0.0.9" provider-name="69 Death Squad">
     <requires>
         <import addon="xbmc.python" version="2.19.0" />
         <import addon="script.module.universalscrapers" version="1.0.0" />
@@ -218,7 +239,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.blamo" version="2.6.3" name="Death Streams" provider-name="Mr.Blamo">
+<addon id="plugin.video.blamo" version="2.6.4" name="Death Streams" provider-name="Mr.Blamo">
     <requires>
 		<import addon="xbmc.python" version="2.19.0"/>
         <import addon="script.module.pyxbmct"/>
@@ -962,23 +983,6 @@ This is a Non-profit resource, organized solely for educational purposes which i
 	</extension>
 </addon>
 
-<addon id="script.module.dsrd" name="Death Stream RD Libraries" version="1.0.5" provider-name="Mr.Blamo">
-	<requires>
-		<import addon="xbmc.python" version="2.1.0" />
-	</requires>
-	<extension point="xbmc.python.module" library="lib" />
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<summary lang="en">Credits -2- TKnorris / Mr. Blamo</summary>
-        <disclaimer lang="en">The author is not responsible for the use of this addon. The author is not responsible for the content found using this addon. The author does not host or own any content found within this addon.
-The author is in no way affiliated with Kodi, Team Kodi, or the XBMC Foundation.
-This is a Non-profit resource, organized solely for educational purposes which is protected under the Fair-Use doctrine of the Copyright Act, Specifically section 107, which does promote freedom of expression, by permitting the unlicensed use of copyright-protected works.
-</disclaimer>
-		<platform>all</platform>
-		<license>Beerware rev. 42</license>
-	</extension>
-</addon>
-
 <addon id="script.module.liveresolver"
      name="LiveResolver"
      version="0.1.50"
@@ -1079,7 +1083,7 @@ level.</description>
   </extension>
 </addon>
 
-<addon id="script.module.placenta" name="Placenta Module" version="1.7.7" provider-name="Team Afterbirth">
+<addon id="script.module.placenta" name="Placenta Module" version="1.7.8" provider-name="Team Afterbirth">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 		<import addon="script.module.beautifulsoup4"/>

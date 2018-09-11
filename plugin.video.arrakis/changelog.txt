@@ -1,3 +1,12 @@
+v0.0.9
+    - Minor icon updates
+    - New section in Podcasts called Tubecasts
+    - Added Complex News to Tubecasts
+    - Added Joe Budden TV to Tubecasts
+    - Added The Joe Rogan Exprience to Tubecasts
+    - Added Freedomain Radio with Stefan Molyneux to Tubecasts
+    - More to come as we go through and find worthy channels
+
 v0.0.8
     - Black And White Classic Movie Section added to Movie Mania
     - Fueled by Death - Podcast Section added
